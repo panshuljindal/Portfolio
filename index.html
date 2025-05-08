@@ -1,755 +1,302 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Panshul Jindal</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/aos.css?ver=1.1.0" rel="stylesheet">
-  <link href="css/bootstrap.min.css?ver=1.1.0" rel="stylesheet">
-  <link href="css/main.css?ver=1.1.0" rel="stylesheet">
-  <meta name="google-site-verification" content="IWgzTFm--Jb4yhztwnShEGbsYmJwGarf5olnAJXoZvE" />
-  <noscript>
-    <style type="text/css">
-      [data-aos] {
-        opacity: 1 !important;
-        transform: translate(0) scale(1) !important;
-      }
-    </style>
-  </noscript>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panshul Jindal | Software & Backend Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #0e0e10;
+      color: #e0e0e0;
+      scroll-behavior: smooth;
+    }
+    header {
+        background: #111;
+        padding: 1.3rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    header div {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    header nav {
+        display: flex;
+        gap: 2rem;
+    }
+
+    header nav a {
+        color: #ccc;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+    }
+
+    header nav a:hover {
+        color: #00bcd4;
+    }
+    header nav a:hover {
+        color: #00bcd4;
+    }
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 1.5rem;
+    }
+    .button {
+        display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background: transparent;
+      border: 1px solid #00bcd4;
+      color: #00bcd4;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    section {
+      max-width: 960px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    section h2 {
+      color: #00bcd4;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: #1a1a1a;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+    }
+    .card:hover {
+      background: #222;
+    }
+    .skills span {
+      display: inline-block;
+      background: #2c2c2c;
+      margin: 0.3rem;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 
-<body id="top">
+<body>
   <header>
-    <div class="profile-page sidebar-collapse">
-      <nav class="navbar navbar-expand-lg fixed-top navbar-transparent bg-primary" color-on-scroll="400">
-        <div class="container">
-          <div class="navbar-translate"><a class="navbar-brand" href="#" rel="tooltip">Panshul Jindal</a>
-            <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
-              aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span
-                class="navbar-toggler-bar bar3"></span></button>
-          </div>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <ul class="navbar-nav">
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="CV.pdf">CV</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="#about">About</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="#researchwork">Research</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="#experience">Work Experience</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="#education">Education</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="#publication">Publications</a></li>
-              <li class="nav-item"><a class="nav-link smooth-scroll" href="projects.html">Projects</a></li>
-
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+    <div><strong>Panshul Jindal</strong></div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
   </header>
-  <div class="page-content">
-    <div>
-      <div class="profile-page">
-        <div class="wrapper">
-          <div class="page-header page-header-small" filter-color="green">
-            <div class="page-header-image" data-parallax="true" style="background-image: url('images/cc-bg-1.jpg')">
-            </div>
-            <div class="container">
-              <div class="content-center">
-                <div class="cc-profile-image"><img src="images/Panshul.png" alt="Image" /></div>
-                <div class="h2 title">Panshul Jindal</div>
-                <p class="category text-white">Computer Science | Software Developer | Android Developer</p>
-              </div>
-            </div>
-            <div class="section">
-              <div class="container">
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="section" id="about">
-        <div class="container">
-          <div class="card" data-aos="fade-up" data-aos-offset="10">
-            <div class="row">
-              <div class="col-lg-6 col-md-12">
-                <div class="card-body">
-                  <div class="h4 mt-0 title">About Me</div>
-                  <p>In 2023, I will graduate with a B.Tech degree in the Department of Computer Science and
-                    Engineering from Vellore Institute of Technology(VIT), Vellore. Since September 2022, I have been
-                    working as a Software Developer at TechRange. I am fond of developing android applications since the
-                    1st year of college and thats what my main focus is at this company. I am particulary interested in
-                    developing products which use machine learning models to increase the user attraction in the
-                    application. </p>
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-12">
-                <div class="card-body">
-                  <div class="h4 mt-0 title">Basic Information</div>
-                  <div class="row">
-                    <div class="col-sm-4"><strong class="text-uppercase">Age:</strong></div>
-                    <div class="col-sm-8">21</div>
-                  </div>
-                  <div class="row mt-3">
-                    <div class="col-sm-4"><strong class="text-uppercase">Email:</strong></div>
-                    <div class="col-sm-8">panshuljindal@gmail.com</div>
-                  </div>
-                  <div class="row mt-3">
-                    <div class="col-sm-4"><strong class="text-uppercase">Languages Known:</strong></div>
-                    <div class="col-sm-8">English, Hindi, German, Spanish</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <section class="hero" data-aos="fade-up" style="background: url('images/uiuc.jpg') center/cover no-repeat;text-align: center; position: relative;">
+  <div style="background-color: rgba(0, 0, 0, 0.6); padding: 2rem; border-radius: 12px; display: inline-block;">
+    <img src="images/Panshul.png" alt="Panshul Jindal" style="width: 140px; height: 140px; border-radius: 50%; border: 3px solid #00bcd4; margin-bottom: 1rem;">
+    <h1 style="margin: 0; font-size: 2.5rem; color: #fff;">Panshul Jindal</h1>
+    <p style="font-size: 1.2rem; max-width: 600px; margin: 1rem auto; color: #ddd;">AI-driven Software Engineer and Backend Specialist | Cloud Infrastructure | LLMs in Production</p>
+    <a class="button" href="Resume.pdf" target="_blank">Download Resume</a>
+  </div>
+</section>
 
-      <div class="section" id="researchwork">
-        <div class="container cc-experience">
-          <div class="h4 text-center mb-4 title">Research Work</div>
+  <section id="about" data-aos="fade-up">
+    <h2>About Me</h2>
+    <p>I’m a backend and AI systems engineer passionate about designing scalable infrastructure and integrating large language models into real-world products. With a Master's in CS from UIUC and professional experience at Kwikpic AI, I bring a track record of high-impact systems deployed at scale.</p>
+  </section>
 
-          <div class="card">
-            <div class="row">
-              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                <div class="card-body cc-experience-header">
-                  <p></p>
-                  <div class="h5">August 2022 - November 2022</div>
-                </div>
-              </div>
-              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                <div class="card-body">
-                  <div class="h5">Sentiment Analysis Using Voting Classification and Neural Networks</div>
-                  <p>Implemented sentiment analysis with ML classification algorithms like Naïve Bayes, Random Forest,
-                    Neural Network. Determined an accuracy of 77.78% and precision of 78.89% using a voting classifier
-                    over a dataset of 140,000 entries
+  <section id="experience" data-aos="fade-up">
+    <h2>Experience</h2>
+    <div class="card">
+      <h3>Research Assistant – RailTEC, UIUC</h3>
+      <p>Jun 2024 – Present</p>
+      <ul>
+        <li>Developed AI backend converting natural language queries into SQL for track data mining</li>
+        <li>Reduced infrastructure processing time by 40% using PySpark and Azure pipelines</li>
+        <li>Led US Army-funded structural diagnostics system with visual anomaly tracking</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Backend Software Engineer – Kwikpic AI Solutions</h3>
+      <p>Jan 2023 – Dec 2023</p>
+      <ul>
+        <li>Built REST APIs and photo delivery infrastructure serving 10M+ users</li>
+        <li>Achieved 98.9% facial recognition accuracy using optimized image preprocessing</li>
+        <li>Integrated Razorpay payments, wallets, and event-driven architecture</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Software Developer Intern – Student Welfare Office</h3>
+      <p>Mar 2022 – Sept 2022</p>
+      <ul>
+        <li>Built NodeJS APIs for VITNav app with 50K+ downloads</li>
+        <li>Led backend deployment on campus Linux servers using PM2 and Nginx</li>
+      </ul>
+    </div>
+  </section>
 
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="row">
-              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                <div class="card-body cc-experience-header">
-                  <div class="h5">July 2022 - October 2022</div>
-                </div>
-              </div>
-              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                <div class="card-body">
-                  <div class="h5">Total Revenue Prediction of Grook Using Machine Learning Models</div>
-                  <p>Predicted total revenue generated by grounds using various regression and classification machine
-                    learning algorithms. Concluded an R2 score of 0.975 & RMSE value of 91.6 after testing the voting
-                    model on multiple polynomial degrees
-                    </i> </b> </p>
-                </div>
-              </div>
-            </div>
-          </div>
+  <section id="projects" data-aos="fade-up">
+    <h2>Projects</h2>
+  
+    <div class="card">
+      <h3>TaskPilot – Multi-Agent Workflow Orchestrator</h3>
+      <p>Mar 2025 – Apr 2025 | Python, FastAPI, LangChain, Redis</p>
+      <ul>
+        <li>Built autonomous agents for tool invocation and collaborative decision-making</li>
+        <li>Integrated Redis queue routing and FastAPI for enterprise integration</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>AutoTest – AI-Powered Test Coverage</h3>
+      <p>Sep 2024 – Dec 2024 | Python, DeepSeekCoder, CI/CD</p>
+      <ul>
+        <li>Increased coverage from 41% to 100% via LLM-generated test cases</li>
+        <li>Integrated into existing CI/CD pipelines for automation</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>Automated Track Component Detection</h3>
+      <p>Feb 2025 – Apr 2025 | Python, OpenCV, PyTorch</p>
+      <ul>
+        <li>Built component-level defect detection model improving accuracy by 40%</li>
+        <li>Deployed auto-report backend with persistent memory and user query interfaces</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>LogChain – Real-time Log Query & Alerting</h3>
+      <p>Jan 2025 – Mar 2025 | Django, PostgreSQL, Redis</p>
+      <ul>
+        <li>Captured and stored logs from distributed microservices with anomaly alerts</li>
+        <li>Used Redis caching for high-frequency query acceleration</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>NotifyX – Serverless Notification System</h3>
+      <p>Feb 2025 – Apr 2025 | Golang, Redis, AWS Lambda</p>
+      <ul>
+        <li>Delivered high-throughput email/SMS/webhook notifications with retry logic</li>
+        <li>Ensured message idempotency and duplicate protection via Redis-based queues</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>CityBot – AWS-powered Shortest Path Chatbot</h3>
+      <p>Jan 2025 – Feb 2025 | AWS Lambda, Lex V2, DynamoDB</p>
+      <ul>
+        <li>Answered graph-based shortest path queries via conversational UI</li>
+        <li>Deployed as stateless Lambda API with refresh logic and secure parsing</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>Illini Classroom Management System</h3>
+      <p>Jan 2024 – Apr 2024 | GCP, NodeJS, MySQL, ReactJS</p>
+      <ul>
+        <li>Built frontend + backend for parental monitoring and grade tracking</li>
+        <li>Used Redis queues and JWT authentication to manage roles and updates</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>Gravitas App – Real-Time Campus Events</h3>
+      <p>Jan 2023 – May 2023 | Android, NodeJS, MongoDB</p>
+      <ul>
+        <li>Designed real-time event app improving user engagement by 40%</li>
+        <li>Implemented push notifications and scalable backend server</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>ClimateSense</h3>
+      <p>Oct 2022 – Dec 2022 | Flask/Flutter, GitHub Workflows</p>
+      <ul>
+        <li>Built climate simulation tool for Fortune 500 auto firm with CI/CD automation</li>
+        <li>Reduced deployment latency by 35% and boosted user demo experience</li>
+      </ul>
+    </div>
+  
+    <div class="card">
+      <h3>HealthcareSaviour</h3>
+      <p>Jul 2021 – Dec 2021 | NodeJS, MongoDB, WebRTC</p>
+      <ul>
+        <li>Secure doctor-patient video platform using WebRTC and PassportJS</li>
+        </li>
+      </ul>
+    </div>
+  
+  </section>
+  
 
-          <div class="section" id="experience">
-            <div class="container cc-experience">
-              <div class="h4 text-center mb-4 title">Work Experience</div>
+  <section id="skills" data-aos="fade-up">
+    <h2>Skills</h2>
+    <div class="skills">
+      <span>Python</span><span>Golang</span><span>Java</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>C/C++</span>
+      <span>NodeJS</span><span>Express</span><span>FastAPI</span><span>Flask</span><span>Django</span><span>ReactJS</span><span>EJS</span>
+      <span>OpenAI</span><span>LangChain</span><span>Transformers</span><span>LLMs</span><span>PyTorch</span><span>Scikit-learn</span><span>OpenCV</span><span>RAG</span><span>MCP Protocol</span>
+      <span>AWS (Lambda, EC2, S3, SES, ECR)</span><span>GCP (BigQuery, Compute Engine)</span><span>Azure</span><span>Docker</span><span>CI/CD</span><span>GitHub Actions</span><span>HDFS</span>
+      <span>MongoDB</span><span>PostgreSQL</span><span>MySQL</span><span>DynamoDB</span><span>Neo4J</span><span>Firebase</span><span>Redis</span><span>Elasticsearch</span>
+      <span>Power BI</span><span>RabbitMQ</span><span>WebSockets</span><span>Postman</span><span>Datadog</span><span>Retool</span><span>Twilio</span>
+    </div>
+  </section>
+  
 
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-experience-header">
-                      <p>October 2022 - Present</p>
-                      <div class="h5">TechRange</div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Software Developer</div>
-                      <p>Working on a variety of quantitative software development projects, ranging from database
-                        management, operating systems, android app development. </p>
-                      <b>Domain:</b> Software Engineering, Database Management Systems, Algorithms, Operating Systems,
-                      Android Development
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-experience-header">
-                      <p>January 2022 - January 2023</p>
-                      <div class="h5">Apple Developers Group</div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Technical Head</div>
-                      <p>Mentored and developed projects under the Android and iOS domain to ensure seamless operations
-                        within the club. Developed apps to solve academic and club-related problems like PaperVIT,
-                        ADG-Connect, CourseDB, TapVIT etc.
-                        </i> </b> </p>
-                      <b>Domain:</b> Software Engineering, Frontend Development, Machine Learning, Android Development,
-                      iOS
-                      Development, Backend Development
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-experience-header">
-                      <p>March 2022 - September 2022</p>
-                      <div class="h5">Student Welfare Office<br>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Software Developer</div>
-                      <p> Modelled android & iOS app-based solution to guide students around the campus backed by Nodejs
-                        12K+ downloads. Publishing applications on the play store, deploying virtual machine servers and
-                        managing the
-                        version control system.
-                      </p>
-                      <b>Domain:</b> Real world Problem, Android Development, iOS Development, Backend Development,
-                      Virtual
-                      Machines, Server
-                    </div>
-                  </div>
-                </div>
-              </div>
+  <section id="contact" data-aos="fade-up">
+    <h2>Contact</h2>
+    <p>Email: <a href="mailto:panshul2@illinois.edu" style="color:#00bcd4">panshul2@illinois.edu</a></p>
+    <p>
+      <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      &nbsp;|&nbsp;
+      <a href="https://github.com/panshuljindal" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    </p>
+  </section>
 
+  <footer>
+    &copy; 2025 Panshul Jindal. Designed with 🔥 and deployed with confidence.
+  </footer>
 
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-experience-header">
-                      <p>April 2021 - June 2021</p>
-                      <div class="h5">Vritrahan Technology</div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Android App Development Intern</div>
-                      <p> Designed and developing android application prototypes to demonstrate the product’s working to
-                        the customer & user. Consults on coding, UI/UX issues and aids in removing issues from
-                        application
-                        code for a functional end product
-                      </p>
-                      <b>Domain:</b> Software Engineering, Database Management, Android Development, Firebase, UI/UX
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="section" id="education">
-            <div class="container cc-education">
-              <div class="h4 text-center mb-4 title">Education</div>
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-education-header">
-                      <p>2019 - 2023</p>
-                      <div class="h5">Bachelor of Technology</div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Vellore Institute of Technology(VIT), Vellore</div>
-                      <p class="dep">Department of Computer Science and Engineering</p>
-                      <p class="cgpa"><b>CGPA: 9.18 / 10 </b></p>
-                      <p> <b>Relevant Coursework: </b> Java, Database Management System, Data Structures and Algorithms,
-                        Object Oriented Programming, Operating System, Compiler Design, Information Security,
-                        Microprocessor, Calculus, Artificial Intelligence, Statistics
-
-                      </p>
-                      </li>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="row">
-                  <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body cc-education-header">
-                      <p>2005 - 2019</p>
-                      <div class="h3">School</div>
-                    </div>
-                  </div>
-                  <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                    <div class="card-body">
-                      <div class="h5">Amity International School, Noida (CBSE)</div>
-                      <p></p>
-                      <div class="h7"><b>Class 12th</b></div>
-                      <p class="cgpa"><b>Percentage: 92.5%</b></p></br>
-                      <div class="h7"><b>Class 10th</b></div>
-                      <p class="cgpa"><b>CGPA: 10 / 10</b></p>
-                      <p>
-                        </ul>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="section" id="publication">
-            <div class="container cc-reference">
-              <div class="h4 mb-4 text-center title">Publications</div>
-              <div class="card" data-aos="zoom-in">
-                <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
-                  <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <p class='dep'> 1. Lovish Chopra, Sarthak Chakraborty, Abhijit Mondal, Sandip Chakraborty: <i>
-                          "PARIMA: Viewport Adaptive 360-Degree Video Streaming" </i>, <b> The Web Conference 2021
-                          (erstwhile WWW' 21) </b> <a
-                          href="https://dl.acm.org/doi/abs/10.1145/3442381.3450070">[Link]</a>,
-                        <a href="https://github.com/sarthak-chakraborty/PARIMA">[Code]</a>, <a
-                          href="https://www.youtube.com/watch?v=3Rbiz6igcd8">[Video]</a>
-                      </p>
-                      <ul>
-                        <li>
-                          <p class="paperdesc"> <b><u>Institute Proficiency in Project Work Award:</u></b> This project
-                            was
-                            my B.Tech Thesis, for which I was awarded the Best B.Tech Project among all the students
-                            from
-                            Computer Science and Engineering Department.</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="section" id="portfolio">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-10 ml-auto mr-auto">
-                  <div class="h4 text-center mb-4 title">Portfolio</div>
-                  <div class="nav-align-center">
-                    <ul class="nav nav-tabs nav-tabs-primary" role="tablist">
-                      <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#skills"
-                          role="tablist">Skills</i></a></li>
-                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#awards" role="tablist">Awards
-                          and
-                          Achievements</a></li>
-                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#por" role="tablist">Positions of
-                          Responsibility</a></li>
-                      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#extra-curricular"
-                          role="tablist">Extra-Curricular</a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="tab-content gallery mt-5">
-                <div class="tab-pane active" id="skills">
-                  <div class="ml-auto mr-auto">
-                    <div class="card" data-aos="zoom-in">
-                      <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
-                        <div class="carousel-inner">
-                          <div class="carousel-further-inner">
-                            <p class='dep'><b><u>Technical Skills:</u></b></p>
-                            <ul>
-                              <li><b>Languages:</b> Python, C++, C, Java, SQL, MIPS, Verilog HDL, HTML, CSS, PHP,
-                                Haskell,
-                                Scheme, Lisp </li>
-                              <li><b>Data Mining:</b> Tensorflow, Spark (Scala), Hadoop</li>
-                              <li><b>Libraries:</b> Pandas, Numpy, Statsmodels, Scikit-Learn, River online-ML, Selenium,
-                                BeautifulSoup </li>
-                              <li><b>Semantic Web Technology:</b> OWL, RDF, RDFS, Blazegraph, Protege</li>
-                              <li><b>Other Skills:</b> Git, Open CV, MS Office, Photoshop</li>
-                            </ul>
-
-                            <p class='dep'><b><u>Coursework:</u></b></p>
-                            <ul>
-                              <li><b>Core Courses:</b> Algorithms&#42;,&ensp; Programming and Data
-                                Structures&#42;,&ensp;
-                                Discrete Structures,&ensp; Formal Language and Automata Theory,&ensp; Software
-                                Engineering&#42;<sup>#</sup>,&ensp; Switching Circuits and Logic Design&#42;,&ensp;
-                                Compilers&#42;,&ensp; Computer Organisation and Architecture&#42;<sup>#</sup>,&ensp;
-                                Operating Systems&#42;,&ensp; Computer Networks&#42;,&ensp; Machine Learning,&ensp;
-                                Scalable
-                                Data Mining<sup>#</sup>,&ensp; Advances in Operating Systems Design<sup>#</sup>,&ensp;
-                                Artificial Intelligence,&ensp; Object Oriented Systems,&ensp; Theory of
-                                Computation,&ensp;
-                                Database Management Systems&#42;<sup>#</sup>,&ensp; Principles of Programming
-                                Languages&ensp;&ensp;</li>
-                              <li><b>Other Courses:</b> Engineering Mathematics,&ensp; Probability and Statistics,&ensp;
-                                Knowledge Modelling and Semantic Technology<sup>#</sup>,&ensp; Linear Algebra,&ensp;
-                                Educational Data Analytics<sup>#</sup>,&ensp; Operation Research</li>
-                            </ul>
-                            <p style="text-align:right">(&#42; marked courses include Laboratory component; <sup>#</sup>
-                              marked courses include Project component)</p>
-
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="tab-pane" id="awards">
-                  <div class="ml-auto mr-auto">
-                    <div class="card" data-aos="zoom-in">
-                      <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
-                        <div class="carousel-inner">
-                          <div class="carousel-further-inner">
-                            <ul class="awards-list">
-                              <li>
-                                <p class="dep"> <b> Bigyan Sinha Memorial Award: </b>Institute Rank 2 among the 1500
-                                  graduating students across all engineering courses of IIT Kharagpur [Feb'21]</p>
-                              </li>
-                              <li>
-                                <p class="dep"><b> Institute Silver Medal: </b> Department Rank 1 among 105 students of
-                                  the
-                                  Department of Computer Science and Engineering [Feb'21]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b> Institute Proficiency in Project Work Award: </b>Best B.Tech Thesis
-                                  among the graduating students of the Department of Computer Science and Engineering
-                                  [Feb'21]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b> J. C. Ghosh Memorial Award: </b>Highest Cumulative Grade Point
-                                  Average
-                                  among all students of the Department of Computer Science and Engineering after sixth
-                                  semester [Sep'19]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b> Goralal Syngal Memorial Scholarship:</b> Three-time recipient of the
-                                  annual scholarship for securing the highest CGPA in Computer Science and Engineering
-                                  Department at the end of 3rd, 5th and 7th semesters [2017 - 19]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b> Department Change:</b> Successfully changed department from
-                                  Electronics
-                                  and Electrical Communication Engineering to Computer Science and Engineering,
-                                  belonging to
-                                  the top 1% of students after first year [2017]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b>Joint Entrance Examination (JEE):</b> Secured All India Rank of 53 in
-                                  JEE
-                                  Main and 885 in JEE Advanced among 1.1 million students [2016]</p>
-                              </li>
-                              <li>
-                                <p class="dep"> <b>AISSCE (Class 12, CBSE):</b> Secured All India Rank 4, School Rank 1
-                                  and
-                                  100/100 in Physics, Chemistry and Computer Science [2016]</p>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="tab-pane" id="por" role="tabpanel">
-                  <div class="ml-auto mr-auto">
-                    <div class="card" data-aos="zoom-in">
-                      <div class="section">
-                        <div class="container cc-experience">
-
-
-
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-                                <div class="card-body cc-experience-header">
-                                  <p>October 2021 - Present</p>
-                                  <div class="h5">Desh ke Mentor</div>
-                                  <p>Delhi Government's Mentorship Program</p>
-                                </div>
-                              </div>
-                              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Mentor</div>
-                                  <p>As a part of the program, I am mentoring four Delhi Government high-school students
-                                    explore their career aspirations and develop their career trajectories. The weekly
-                                    meetings with the students help them take a step-by-step approach towards career
-                                    exploration.
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-                                <div class="card-body cc-experience-header">
-                                  <p>April 2020 - May 2021</p>
-                                  <div class="h5">Ehtiyaat</div>
-                                  <p>Collaborative Social Entrepreneurship Project, Enactus CVS and Enactus SGTB Khalsa
-                                  </p>
-                                </div>
-                              </div>
-                              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Business Development Advisor</div>
-                                  <p>The project emanated from my desire to help people during the pandemic. The
-                                    Covid-19
-                                    pandemic erupted when I was in college, and I struggled to get a mask and sanitizer,
-                                    that too at exorbitant prices due to high demand. I realized that I was privileged
-                                    to
-                                    afford expensive products despite the struggle, but people who are losing their jobs
-                                    cannot afford them. I used the knowledge from my entrepreneurship course to develop
-                                    this
-                                    idea, where we could provide employment to some people and simultaneously help
-                                    financially struggling families obtain safety kits at low prices. We employed five
-                                    women
-                                    in preparation of safety kits, and took orders for low-cost good-quality safety kits
-                                    from across India. I was able to lead a team of over 25 students in the project,
-                                    learn
-                                    more about social entrepreneurship, put my theoretical knowledge to practice, and
-                                    help
-                                    various people.</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-                                <div class="card-body cc-experience-header">
-                                  <p>August 2018 - July 2020</p>
-                                  <div class="h5">Student Welfare Group</div>
-                                  <p>IIT Kharagpur</p>
-                                </div>
-                              </div>
-                              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Student Mentor</div>
-                                  <p>I mentored seven students from the Department of Computer Science and Engineering,
-                                    2018
-                                    batch. I was responsible for guiding them in their academic and extra-academic
-                                    issues,
-                                    along with providing them necessary guidance for securing internships.</p>
-
-                                  <div class="h5">Student Teacher, Programming and Data Structures (PDS)</div>
-                                  <p>I also volunteered to teach students during the PDS doubt clearing sessions for
-                                    first
-                                    years who had not studied Computer Science during their high school. In these
-                                    sessions,
-                                    I resolved the doubts of ten first year students and helped them to understand
-                                    topics
-                                    like pointers, linked lists and arrays, which are typically hard for beginners to
-                                    understand. </p>
-
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-                                <div class="card-body cc-experience-header">
-                                  <p>August 2016 - July 2020</p>
-                                  <div class="h5">Awaaz, IIT Kharagpur</div>
-                                  <p> Student Media Body of IIT Kharagpur </p>
-                                </div>
-                              </div>
-                              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Editor</div>
-                                  As a part of the media body of the campus, we analyzed various problems pertaining in
-                                  the
-                                  campus and took initiatives to reach out to administration to resolve them. I, along
-                                  with
-                                  my batchmates, led a team of 50 members to analyse, develop and publish insights on
-                                  various topics like internships, placements, student elections, general championship,
-                                  institute ranking, etc.
-                                  <br> <br> My personal motive to join the organisation was to promote <b> constructive
-                                    journalism </b>. My definition of the term is that any project that we work on as a
-                                  media body should have one of two motives:
-                                  <ol>
-                                    <li> Promulgating important and useful positive information to the students </li>
-                                    <li> If we are reporting something negative or something that needs to be improved
-                                      in
-                                      the campus, we should ensure that the relevant suggestions reach to the
-                                      administration
-                                      and are implemented by them, if feasible.</li>
-                                  </ol>
-                                  Things change for the better only when the students' needs reach the administration
-                                  appropriately through a proper channel, and I believe that a constructive media body
-                                  provides that channel.
-                                  <br> In order to implement the same, I took various personal initiatives, few examples
-                                  include:
-                                  <ul>
-                                    <li> Enforcement of Proposal Updates: During student elections, each candidate puts
-                                      forward a set of proposals that he/she would implement if elected. I led the
-                                      project
-                                      of making the elected Student Council accountable to all the students by
-                                      scrutinizing
-                                      over and interviewing them for the progress on the proposals </li>
-                                    <li> Basic Amenities: We conducted a survey among the students to ask them about the
-                                      various problems that they face regarding basic amenities like canteens, water
-                                      coolers, street lights, stationery shops etc. in order to find out where these
-                                      amenities need to be improved in the campus. We reached out to the administration
-                                      with
-                                      the results of the survey putting forward the student needs, and appropriate
-                                      actions
-                                      were taken by the administration to resolve them. </li>
-                                  </ul>
-                                  Apart from this, the team also led various other projects like publication of monthly
-                                  newsletter, Know Your Professor, Know Your Entrepreneur, Humans of KGP, Jewels of KGP,
-                                  etc. along with conducting an annual event "Panch Parmeshwar" at Spring Fest.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-3 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-                                <div class="card-body cc-experience-header">
-                                  <p>2015</p>
-                                  <div class="h5">NEPS Milestones</div>
-                                  <p> Annual School Magazine </p>
-                                </div>
-                              </div>
-                              <div class="col-md-9" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Member of Editorial Board</div>
-                                  <p>As a part of the team, I worked in designing the structure and editing various
-                                    articles, English as well as Hindi, for the School Magazine for 2014-15, NEPS
-                                    Milestones. I was awarded a proficiency certificate by the school for the exemplary
-                                    work
-                                    done in the publication of the magazine.</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="tab-pane" id="extra-curricular">
-                  <div class="ml-auto mr-auto">
-                    <div class="card" data-aos="zoom-in">
-                      <div class="carousel slide" id="cc-Indicators" data-ride="carousel">
-                        <div class="carousel-inner">
-                          <div class="carousel-further-inner">
-                            <ul>
-                              <li> <b> Silver Medal in Open IIT Mathematics Olympiad: </b> I led my team of four members
-                                in
-                                this competition and we secured the second position among over 100 teams in the
-                                Mathematics
-                                Olympiad. [2019] </li>
-                              <li> <b> Part of Inter-Hall Open Soft Team of Radhakrishnan Hall of Residence, IIT
-                                  Kharagpur:
-                                </b> As a part of the competition, we developed a web application that can digitalise a
-                                doctor's handwritten prescription using Deep Learning Algorithms. Along with that, it
-                                could
-                                detect and correct spelling mistakes in prescriptions automatically. [2018] </li>
-                              <li> <b> Volunteer at National Service Scheme (NSS): </b> I was a volunteer teacher at
-                                National Service Scheme. My team taught the students of two primary rural schools in
-                                Hiradihi and Talbagicha villages of Kharagpur. We taught elementary mathematics and
-                                english
-                                to the students. I personally mentored five students academically. Also, I was a part of
-                                the
-                                Annual NSS Camp in December 2016 at Khelar village, where my unit helped the villagers
-                                develop a road in the village. [2016 - 2018]
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-                <div class="tab-pane" id="projects" role="tabpanel">
-                  <div class="ml-auto mr-auto">
-                    <div class="card" data-aos="zoom-in">
-                      <div class="section">
-                        <div class="container cc-experience">
-
-
-                          <div class="card">
-                            <div class="row">
-                              <div class="col-md-1 bg-primary" data-aos="fade-right" data-aos-offset="50"
-                                data-aos-duration="500">
-
-                              </div>
-                              <div class="col-md-5" data-aos="fade-left" data-aos-offset="50" data-aos-duration="500">
-                                <div class="card-body">
-                                  <div class="h5">Member of Editorial Board</div>
-                                  <p></p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-
-            <footer class="footer">
-              <div class="modal modal-mini modal-primary" id="infoModal" tabindex="-1" role="dialog"
-                aria-labelledby="myModalLabel" style="display: none;" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header justify-content-center">
-                      <div class="modal-profile">
-                        Hi
-                      </div>
-                    </div>
-                    <div class="modal-body" style="font-size: 14px;">
-                      <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img
-                          src="https://poweredby.yahoo.com/white.png" width="134" height="29" /> </a>
-                      <p>Just a simple one page weather app designed for a FreeCodeCamp.com challenge</p>
-                    </div>
-                    <div class="modal-footer">
-                      <a id="modal-close-button" data-dismiss="modal">Close</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="h4 title text-center">Panshul Jindal</div>
-              <div class="text-center text-muted">
-                <p>&copy; Creative CV. All rights reserved.<br>Design - <a class="credit"
-                    href="https://templateflip.com" target="_blank">TemplateFlip</a></p>
-              </div>
-            </footer>
-
-            <script src="js/core/jquery.3.2.1.min.js?ver=1.1.0"></script>
-            <script src="js/core/popper.min.js?ver=1.1.0"></script>
-            <script src="js/core/bootstrap.min.js?ver=1.1.0"></script>
-            <script src="js/now-ui-kit.js?ver=1.1.0"></script>
-            <script src="js/aos.js?ver=1.1.0"></script>
-            <script src="scripts/main.js?ver=1.1.0"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true
+    });
+  </script>
 </body>
 
 </html>
