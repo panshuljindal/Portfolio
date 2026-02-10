@@ -14,14 +14,20 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://panshuljindal.com" />
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   
   <style>
     :root {
       --primary: #00bcd4;
       --primary-dark: #0097a7;
+      --accent: #7c4dff;
       --bg-dark: #0a0a0c;
       --bg-card: #12121a;
       --bg-card-hover: #1a1a24;
@@ -36,30 +42,32 @@
       box-sizing: border-box;
     }
     
+    html {
+      scroll-behavior: smooth;
+    }
+    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-primary);
-      scroll-behavior: smooth;
       line-height: 1.6;
+      overflow-x: hidden;
     }
     
-    /* Animated gradient background */
-    .gradient-bg {
+    /* Particle Canvas */
+    #particle-canvas {
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 188, 212, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(124, 77, 255, 0.08) 0%, transparent 50%);
-      pointer-events: none;
+      width: 100%;
+      height: 100%;
       z-index: -1;
+      pointer-events: none;
     }
     
+    /* Header */
     header {
-      background: rgba(10, 10, 12, 0.9);
+      background: rgba(10, 10, 12, 0.8);
       backdrop-filter: blur(20px);
       padding: 1rem 4rem;
       display: flex;
@@ -71,11 +79,12 @@
       right: 0;
       z-index: 999;
       border-bottom: 1px solid rgba(255,255,255,0.05);
+      transform: translateY(-100%);
     }
 
     .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.5rem;
+      font-weight: 800;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -122,26 +131,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 4rem;
+      padding: 6rem 2rem;
       position: relative;
-      overflow: hidden;
-    }
-    
-    .hero::before {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(0, 188, 212, 0.15) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: pulse 4s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
     }
     
     .hero-content {
@@ -150,51 +141,49 @@
     }
     
     .hero-image {
-      width: 160px;
-      height: 160px;
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       border: 4px solid transparent;
       background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
                   var(--gradient) border-box;
       margin-bottom: 2rem;
-      box-shadow: 0 20px 60px rgba(0, 188, 212, 0.3);
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      box-shadow: 0 20px 60px rgba(0, 188, 212, 0.4);
+      opacity: 0;
     }
     
     .hero h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
+      font-size: 4rem;
+      font-weight: 800;
       margin-bottom: 0.5rem;
       background: var(--gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      opacity: 0;
     }
     
     .hero .role {
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       color: var(--text-secondary);
       margin-bottom: 0.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      opacity: 0;
     }
     
     .hero .role img {
-      height: 24px;
+      height: 28px;
     }
     
     .hero .tagline {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      max-width: 650px;
+      margin: 0 auto 2.5rem;
+      opacity: 0;
     }
     
     .hero-buttons {
@@ -202,18 +191,20 @@
       gap: 1rem;
       justify-content: center;
       flex-wrap: wrap;
+      opacity: 0;
     }
     
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      border-radius: 8px;
-      font-weight: 500;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
       text-decoration: none;
       transition: all 0.3s ease;
       cursor: pointer;
+      font-size: 1rem;
     }
     
     .btn-primary {
@@ -223,8 +214,8 @@
     }
     
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0, 188, 212, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 188, 212, 0.5);
     }
     
     .btn-outline {
@@ -236,167 +227,343 @@
     .btn-outline:hover {
       background: var(--primary);
       color: var(--bg-dark);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+    }
+    
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+    }
+    
+    .scroll-indicator i {
+      font-size: 2rem;
+      color: var(--primary);
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
     }
     
     /* Sections */
     section {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 5rem 2rem;
+      padding: 6rem 2rem;
     }
     
-    section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      display: flex;
+    .section-header {
+      margin-bottom: 3rem;
+      opacity: 0;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      display: inline-flex;
       align-items: center;
       gap: 1rem;
     }
     
-    section h2::before {
+    .section-header h2::before {
       content: '';
-      width: 40px;
-      height: 4px;
+      width: 50px;
+      height: 5px;
       background: var(--gradient);
-      border-radius: 2px;
+      border-radius: 3px;
     }
     
-    /* Cards */
-    .card {
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+    }
+    
+    /* About */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-text p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+    }
+    
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .stat-card {
+      background: var(--bg-card);
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      text-align: center;
+      opacity: 0;
+    }
+    
+    .stat-card .number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .stat-card .label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    /* Experience Cards */
+    .experience-card {
       background: var(--bg-card);
       padding: 2rem;
       margin-bottom: 1.5rem;
-      border-radius: 16px;
+      border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.05);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       position: relative;
       overflow: hidden;
+      opacity: 0;
     }
     
-    .card::before {
+    .experience-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
+      height: 4px;
       background: var(--gradient);
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
     }
     
-    .card:hover {
+    .experience-card:hover {
       background: var(--bg-card-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
     }
     
-    .card:hover::before {
-      opacity: 1;
+    .experience-card:hover::before {
+      transform: scaleX(1);
     }
     
-    .card h3 {
-      font-size: 1.3rem;
+    .experience-card h3 {
+      font-size: 1.4rem;
       margin-bottom: 0.5rem;
-      color: var(--text-primary);
     }
     
-    .card .meta {
+    .experience-card .meta {
       color: var(--primary);
-      font-size: 0.9rem;
+      font-size: 1rem;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
     
-    .card ul {
+    .experience-card ul {
       color: var(--text-secondary);
       padding-left: 1.2rem;
+      margin-bottom: 1rem;
     }
     
-    .card li {
+    .experience-card li {
       margin-bottom: 0.5rem;
     }
     
-    .card .tags {
+    .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-top: 1rem;
     }
     
     .tag {
       background: rgba(0, 188, 212, 0.1);
       color: var(--primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.8rem;
+      padding: 0.4rem 1rem;
+      border-radius: 25px;
+      font-size: 0.85rem;
       border: 1px solid rgba(0, 188, 212, 0.2);
+      transition: all 0.3s ease;
     }
     
-    /* Skills */
-    .skills-grid {
+    .tag:hover {
+      background: rgba(0, 188, 212, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    /* Bento Grid for Projects */
+    .bento-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 180px;
       gap: 1.5rem;
     }
     
-    .skill-category {
+    .bento-item {
       background: var(--bg-card);
-      padding: 1.5rem;
-      border-radius: 16px;
+      border-radius: 24px;
+      padding: 2rem;
       border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 0;
     }
     
-    .skill-category h4 {
-      color: var(--primary);
+    .bento-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
+    .bento-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(0, 188, 212, 0.2);
+    }
+    
+    .bento-item:hover::before {
+      opacity: 0.05;
+    }
+    
+    .bento-item > * {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Bento sizes */
+    .bento-lg {
+      grid-column: span 8;
+      grid-row: span 2;
+    }
+    
+    .bento-md {
+      grid-column: span 4;
+      grid-row: span 2;
+    }
+    
+    .bento-sm {
+      grid-column: span 6;
+      grid-row: span 1;
+    }
+    
+    .bento-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .bento-item .icon {
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+    }
+    
+    .bento-item p {
+      color: var(--text-secondary);
       font-size: 0.95rem;
+      flex-grow: 1;
+    }
+    
+    .bento-lg h3 {
+      font-size: 1.6rem;
+    }
+    
+    .bento-lg p {
+      font-size: 1.05rem;
+    }
+    
+    /* Skills Bento */
+    .skills-bento {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    
+    .skill-card {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+      opacity: 0;
+    }
+    
+    .skill-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-5px);
+    }
+    
+    .skill-card h4 {
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-    }
-    
-    .skill-category .tags {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 0.5rem;
     }
     
     /* Contact */
     .contact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
     }
     
     .contact-card {
       background: var(--bg-card);
-      padding: 1.5rem;
-      border-radius: 12px;
+      padding: 2rem;
+      border-radius: 20px;
       text-align: center;
       border: 1px solid rgba(255,255,255,0.05);
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
       text-decoration: none;
       color: inherit;
+      opacity: 0;
     }
     
     .contact-card:hover {
       background: var(--bg-card-hover);
-      transform: translateY(-4px);
+      transform: translateY(-8px);
       border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 188, 212, 0.2);
     }
     
     .contact-card i {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: var(--primary);
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
     }
     
     .contact-card h4 {
-      font-size: 1rem;
+      font-size: 1.1rem;
       margin-bottom: 0.3rem;
     }
     
@@ -408,7 +575,7 @@
     /* Footer */
     footer {
       text-align: center;
-      padding: 3rem 1rem;
+      padding: 4rem 1rem;
       color: var(--text-secondary);
       font-size: 0.9rem;
       border-top: 1px solid rgba(255,255,255,0.05);
@@ -417,22 +584,52 @@
     footer .social-links {
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 2rem;
       margin-bottom: 1.5rem;
     }
     
     footer .social-links a {
       color: var(--text-secondary);
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       transition: all 0.3s ease;
     }
     
     footer .social-links a:hover {
       color: var(--primary);
-      transform: translateY(-3px);
+      transform: translateY(-4px);
     }
     
     /* Mobile */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+      
+      .bento-lg {
+        grid-column: span 6;
+      }
+      
+      .bento-md {
+        grid-column: span 6;
+      }
+      
+      .bento-sm {
+        grid-column: span 3;
+      }
+      
+      .skills-bento {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .contact-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
     @media (max-width: 768px) {
       header {
         padding: 1rem 1.5rem;
@@ -443,22 +640,48 @@
       }
       
       .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
       }
       
       .hero .role {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
       }
       
       section {
-        padding: 3rem 1.5rem;
+        padding: 4rem 1.5rem;
+      }
+      
+      .section-header h2 {
+        font-size: 2rem;
+      }
+      
+      .bento-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: auto;
+      }
+      
+      .bento-lg, .bento-md, .bento-sm {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      
+      .bento-item {
+        padding: 1.5rem;
+      }
+      
+      .skills-bento {
+        grid-template-columns: 1fr;
+      }
+      
+      .contact-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="gradient-bg"></div>
+  <canvas id="particle-canvas"></canvas>
   
   <header>
     <div class="logo">PJ</div>
@@ -472,12 +695,12 @@
   </header>
 
   <section class="hero">
-    <div class="hero-content" data-aos="fade-up">
+    <div class="hero-content">
       <img src="images/Panshul.png" alt="Panshul Jindal" class="hero-image">
       <h1>Panshul Jindal</h1>
       <p class="role">
         Software Engineer @ 
-        <img src="https://img.icons8.com/color/48/microsoft.png" alt="Microsoft" style="height: 24px; vertical-align: middle;">
+        <img src="https://img.icons8.com/color/48/microsoft.png" alt="Microsoft">
         Microsoft
       </p>
       <p class="tagline">Building AI-powered systems and scalable cloud infrastructure. MS in Computer Science from UIUC.</p>
@@ -486,27 +709,51 @@
           <i class="fas fa-download"></i> Resume
         </a>
         <a href="#contact" class="btn btn-outline">
-          <i class="fas fa-envelope"></i> Contact
+          <i class="fas fa-envelope"></i> Get in Touch
         </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-header">
+      <h2>About Me</h2>
+    </div>
+    <div class="about-content">
+      <div class="about-text">
+        <p>I'm a Software Engineer at Microsoft, passionate about building high-impact AI systems and scalable backend infrastructure. With a Master's in Computer Science from the University of Illinois at Urbana-Champaign, I bring experience in LLMs, cloud architecture, and production systems.</p>
+        <p>Previously, I built AI-powered photo delivery infrastructure at Kwikpic serving 10M+ users, and led research projects at UIUC involving NLP-to-SQL systems and computer vision for structural diagnostics.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="number">10M+</div>
+          <div class="label">Users Served</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">40%</div>
+          <div class="label">Processing Time Reduced</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">98.9%</div>
+          <div class="label">Recognition Accuracy</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">100%</div>
+          <div class="label">Test Coverage Achieved</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="about" data-aos="fade-up">
-    <h2>About Me</h2>
-    <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 800px;">
-      I'm a Software Engineer at Microsoft, passionate about building high-impact AI systems and scalable backend infrastructure. With a Master's in Computer Science from the University of Illinois at Urbana-Champaign, I bring experience in LLMs, cloud architecture, and production systems.
-    </p>
-    <br>
-    <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 800px;">
-      Previously, I built AI-powered photo delivery infrastructure at Kwikpic serving 10M+ users, and led research projects at UIUC involving NLP-to-SQL systems and computer vision for structural diagnostics.
-    </p>
-  </section>
-
-  <section id="experience" data-aos="fade-up">
-    <h2>Experience</h2>
+  <section id="experience">
+    <div class="section-header">
+      <h2>Experience</h2>
+    </div>
     
-    <div class="card" data-aos="fade-up" data-aos-delay="100">
+    <div class="experience-card">
       <h3>Software Engineer</h3>
       <div class="meta">
         <img src="https://img.icons8.com/color/24/microsoft.png" alt="Microsoft">
@@ -524,7 +771,7 @@
       </div>
     </div>
     
-    <div class="card" data-aos="fade-up" data-aos-delay="200">
+    <div class="experience-card">
       <h3>Research Assistant</h3>
       <div class="meta">
         <i class="fas fa-university"></i>
@@ -544,7 +791,7 @@
       </div>
     </div>
     
-    <div class="card" data-aos="fade-up" data-aos-delay="300">
+    <div class="experience-card">
       <h3>Backend Software Engineer</h3>
       <div class="meta">
         <i class="fas fa-camera"></i>
@@ -565,68 +812,73 @@
     </div>
   </section>
 
-  <section id="projects" data-aos="fade-up">
-    <h2>Featured Projects</h2>
-    
-    <div class="card" data-aos="fade-up" data-aos-delay="100">
-      <h3>TaskPilot – Multi-Agent Workflow Orchestrator</h3>
-      <ul>
-        <li>Built autonomous agents for tool invocation and collaborative decision-making</li>
-        <li>Integrated Redis queue routing and FastAPI for enterprise integration</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">FastAPI</span>
-        <span class="tag">LangChain</span>
-        <span class="tag">Redis</span>
-      </div>
+  <section id="projects">
+    <div class="section-header">
+      <h2>Featured Projects</h2>
+      <p>A selection of projects I've built that showcase my expertise in AI, backend systems, and cloud infrastructure.</p>
     </div>
     
-    <div class="card" data-aos="fade-up" data-aos-delay="200">
-      <h3>AutoTest – AI-Powered Test Coverage</h3>
-      <ul>
-        <li>Increased test coverage from 41% to 100% via LLM-generated test cases</li>
-        <li>Integrated into existing CI/CD pipelines for automation</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">Python</span>
-        <span class="tag">DeepSeek</span>
-        <span class="tag">CI/CD</span>
+    <div class="bento-grid">
+      <div class="bento-item bento-lg">
+        <div>
+          <div class="icon">🤖</div>
+          <h3>TaskPilot – Multi-Agent Workflow Orchestrator</h3>
+          <p>Built autonomous agents for tool invocation and collaborative decision-making. Integrated Redis queue routing and FastAPI for enterprise integration.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">Redis</span>
+        </div>
       </div>
-    </div>
-    
-    <div class="card" data-aos="fade-up" data-aos-delay="300">
-      <h3>LogChain – Real-time Log Query & Alerting</h3>
-      <ul>
-        <li>Captured and stored logs from distributed microservices with anomaly alerts</li>
-        <li>Used Redis caching for high-frequency query acceleration</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">Django</span>
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">Redis</span>
+      
+      <div class="bento-item bento-md">
+        <div>
+          <div class="icon">🧪</div>
+          <h3>AutoTest</h3>
+          <p>Increased test coverage from 41% to 100% via LLM-generated test cases. CI/CD integrated.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">DeepSeek</span>
+          <span class="tag">CI/CD</span>
+        </div>
       </div>
-    </div>
-    
-    <div class="card" data-aos="fade-up" data-aos-delay="400">
-      <h3>NotifyX – Serverless Notification System</h3>
-      <ul>
-        <li>Delivered high-throughput email/SMS/webhook notifications with retry logic</li>
-        <li>Ensured message idempotency and duplicate protection via Redis-based queues</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">Golang</span>
-        <span class="tag">AWS Lambda</span>
-        <span class="tag">Redis</span>
+      
+      <div class="bento-item bento-sm">
+        <div>
+          <div class="icon">📊</div>
+          <h3>LogChain</h3>
+          <p>Real-time log query & alerting with Redis caching.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Django</span>
+          <span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      
+      <div class="bento-item bento-sm">
+        <div>
+          <div class="icon">🔔</div>
+          <h3>NotifyX</h3>
+          <p>Serverless notifications with retry logic & idempotency.</p>
+        </div>
+        <div class="tags">
+          <span class="tag">Golang</span>
+          <span class="tag">AWS Lambda</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="skills" data-aos="fade-up">
-    <h2>Skills & Technologies</h2>
+  <section id="skills">
+    <div class="section-header">
+      <h2>Skills & Technologies</h2>
+    </div>
     
-    <div class="skills-grid">
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+    <div class="skills-bento">
+      <div class="skill-card">
         <h4><i class="fas fa-code"></i> Languages</h4>
         <div class="tags">
           <span class="tag">Python</span>
@@ -638,7 +890,7 @@
         </div>
       </div>
       
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+      <div class="skill-card">
         <h4><i class="fas fa-brain"></i> AI/ML</h4>
         <div class="tags">
           <span class="tag">LangChain</span>
@@ -649,7 +901,7 @@
         </div>
       </div>
       
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+      <div class="skill-card">
         <h4><i class="fas fa-cloud"></i> Cloud & DevOps</h4>
         <div class="tags">
           <span class="tag">AWS</span>
@@ -660,7 +912,7 @@
         </div>
       </div>
       
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="400">
+      <div class="skill-card">
         <h4><i class="fas fa-database"></i> Databases</h4>
         <div class="tags">
           <span class="tag">PostgreSQL</span>
@@ -671,7 +923,7 @@
         </div>
       </div>
       
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="500">
+      <div class="skill-card">
         <h4><i class="fas fa-server"></i> Backend</h4>
         <div class="tags">
           <span class="tag">FastAPI</span>
@@ -682,7 +934,7 @@
         </div>
       </div>
       
-      <div class="skill-category" data-aos="fade-up" data-aos-delay="600">
+      <div class="skill-card">
         <h4><i class="fas fa-tools"></i> Tools</h4>
         <div class="tags">
           <span class="tag">Git</span>
@@ -695,11 +947,11 @@
     </div>
   </section>
 
-  <section id="contact" data-aos="fade-up">
-    <h2>Get In Touch</h2>
-    <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px;">
-      I'm always interested in hearing about new opportunities, collaborations, or just having a chat about technology.
-    </p>
+  <section id="contact">
+    <div class="section-header">
+      <h2>Get In Touch</h2>
+      <p>I'm always interested in hearing about new opportunities, collaborations, or just having a chat about technology.</p>
+    </div>
     
     <div class="contact-grid">
       <a href="mailto:panshuljindal@gmail.com" class="contact-card">
@@ -735,38 +987,306 @@
       <a href="https://twitter.com/JindalPanshul" target="_blank"><i class="fab fa-twitter"></i></a>
       <a href="mailto:panshuljindal@gmail.com"><i class="fas fa-envelope"></i></a>
     </div>
-    <p>&copy; 2025 Panshul Jindal. Built with 🔥 and deployed with confidence.</p>
+    <p>&copy; 2025 Panshul Jindal. Built with ☕ and deployed with confidence.</p>
   </footer>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
-    AOS.init({
-      duration: 800,
-      once: true,
-      offset: 100
+    // ============================================
+    // THREE.JS PARTICLE SYSTEM
+    // ============================================
+    const canvas = document.getElementById('particle-canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    // Create particles
+    const particleCount = 2000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    
+    const color1 = new THREE.Color(0x00bcd4);
+    const color2 = new THREE.Color(0x7c4dff);
+    
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      
+      // Position
+      positions[i3] = (Math.random() - 0.5) * 50;
+      positions[i3 + 1] = (Math.random() - 0.5) * 50;
+      positions[i3 + 2] = (Math.random() - 0.5) * 50;
+      
+      // Color (gradient between cyan and purple)
+      const mixRatio = Math.random();
+      const mixedColor = color1.clone().lerp(color2, mixRatio);
+      colors[i3] = mixedColor.r;
+      colors[i3 + 1] = mixedColor.g;
+      colors[i3 + 2] = mixedColor.b;
+    }
+    
+    const particleGeometry = new THREE.BufferGeometry();
+    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    particleGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.08,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      sizeAttenuation: true
     });
     
-    // Smooth scroll for nav links
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+    
+    camera.position.z = 20;
+    
+    // Mouse interaction
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
+    
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      
+      // Rotate particles
+      particles.rotation.x += 0.0003;
+      particles.rotation.y += 0.0005;
+      
+      // Mouse influence
+      particles.rotation.x += mouseY * 0.0003;
+      particles.rotation.y += mouseX * 0.0003;
+      
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
+    // ============================================
+    // GSAP ANIMATIONS
+    // ============================================
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Header animation
+    gsap.to('header', {
+      y: 0,
+      duration: 1,
+      delay: 0.5,
+      ease: 'power3.out'
+    });
+    
+    // Hero animations
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    
+    heroTl
+      .to('.hero-image', {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        ease: 'back.out(1.7)'
+      })
+      .to('.hero h1', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+      }, '-=0.5')
+      .to('.hero .role', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out'
+      }, '-=0.4')
+      .to('.hero .tagline', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out'
+      }, '-=0.3')
+      .to('.hero-buttons', {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power3.out'
+      }, '-=0.2')
+      .to('.scroll-indicator', {
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power3.out'
+      }, '-=0.2');
+    
+    // Set initial states
+    gsap.set(['.hero-image', '.hero h1', '.hero .role', '.hero .tagline', '.hero-buttons'], {
+      y: 30
+    });
+    
+    gsap.set('.hero-image', {
+      scale: 0.8
+    });
+    
+    // Section headers
+    gsap.utils.toArray('.section-header').forEach(header => {
+      gsap.to(header, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: header,
+          start: 'top 80%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(header, { y: 40 });
+    });
+    
+    // About text paragraphs
+    gsap.utils.toArray('.about-text p').forEach((p, i) => {
+      gsap.to(p, {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        delay: i * 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: p,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(p, { x: -30 });
+    });
+    
+    // Stat cards
+    gsap.utils.toArray('.stat-card').forEach((card, i) => {
+      gsap.to(card, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        delay: i * 0.1,
+        ease: 'back.out(1.7)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(card, { scale: 0.8 });
+    });
+    
+    // Experience cards
+    gsap.utils.toArray('.experience-card').forEach((card, i) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: i * 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(card, { y: 50 });
+    });
+    
+    // Bento items
+    gsap.utils.toArray('.bento-item').forEach((item, i) => {
+      gsap.to(item, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.8,
+        delay: i * 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(item, { y: 40, scale: 0.95 });
+    });
+    
+    // Skill cards
+    gsap.utils.toArray('.skill-card').forEach((card, i) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        delay: i * 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(card, { y: 30 });
+    });
+    
+    // Contact cards
+    gsap.utils.toArray('.contact-card').forEach((card, i) => {
+      gsap.to(card, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        delay: i * 0.1,
+        ease: 'back.out(1.4)',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 90%',
+          toggleActions: 'play none none reverse'
+        }
+      });
+      gsap.set(card, { y: 30 });
+    });
+    
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          gsap.to(window, {
+            duration: 1,
+            scrollTo: { y: target, offsetY: 80 },
+            ease: 'power3.inOut'
+          });
         }
       });
     });
     
     // Header background on scroll
-    window.addEventListener('scroll', () => {
-      const header = document.querySelector('header');
-      if (window.scrollY > 50) {
-        header.style.background = 'rgba(10, 10, 12, 0.98)';
-      } else {
-        header.style.background = 'rgba(10, 10, 12, 0.9)';
+    ScrollTrigger.create({
+      start: 'top -50',
+      onUpdate: (self) => {
+        if (self.direction === 1) {
+          document.querySelector('header').style.background = 'rgba(10, 10, 12, 0.95)';
+        } else if (window.scrollY < 50) {
+          document.querySelector('header').style.background = 'rgba(10, 10, 12, 0.8)';
+        }
       }
     });
   </script>
+  
+  <!-- GSAP ScrollTo Plugin -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
 </body>
 
 </html>
