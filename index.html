@@ -815,12 +815,12 @@
   <section id="projects">
     <div class="section-header">
       <h2>Featured Projects</h2>
-      <p>A selection of projects I've built that showcase my expertise in AI, backend systems, and cloud infrastructure.</p>
+      <p>A selection of projects I've built that showcase my expertise in backend systems, AI, and cloud infrastructure.</p>
     </div>
     
     <div class="bento-grid">
       <div class="bento-item bento-lg">
-        <a href="https://github.com/panshuljindal/eloquent-ai" target="_blank" style="text-decoration: none; color: inherit;">
+        <a href="https://github.com/panshuljindal/eloquent-ai" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
           <div>
             <div class="icon">💬</div>
             <h3>Eloquent AI – RAG Chatbot</h3>
@@ -831,13 +831,12 @@
             <span class="tag">React</span>
             <span class="tag">Pinecone</span>
             <span class="tag">OpenAI</span>
-            <span class="tag">WebSocket</span>
           </div>
         </a>
       </div>
       
       <div class="bento-item bento-md">
-        <a href="https://github.com/panshuljindal/stackAI" target="_blank" style="text-decoration: none; color: inherit;">
+        <a href="https://github.com/panshuljindal/stackAI" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
           <div>
             <div class="icon">🧠</div>
             <h3>StackAI – Vector DB API</h3>
@@ -846,38 +845,67 @@
           <div class="tags">
             <span class="tag">FastAPI</span>
             <span class="tag">Cohere</span>
-            <span class="tag">Vector Search</span>
             <span class="tag">Docker</span>
           </div>
         </a>
       </div>
       
       <div class="bento-item bento-sm">
-        <a href="https://github.com/panshuljindal/vibequiz" target="_blank" style="text-decoration: none; color: inherit;">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
           <div>
-            <div class="icon">📝</div>
-            <h3>VibeQuiz</h3>
-            <p>Upload PDFs/DOCX, generate AI quizzes with GPT-4o.</p>
+            <div class="icon">🔔</div>
+            <h3>NotifyX</h3>
+            <p>High-throughput notification microservice with at-least-once delivery via email, SMS, webhooks.</p>
           </div>
           <div class="tags">
-            <span class="tag">React</span>
-            <span class="tag">Flask</span>
-            <span class="tag">Azure OpenAI</span>
+            <span class="tag">Golang</span>
+            <span class="tag">Redis</span>
+            <span class="tag">AWS Lambda</span>
           </div>
-        </a>
+        </div>
       </div>
       
       <div class="bento-item bento-sm">
-        <a href="https://fitfuel.panshuljindal.com" target="_blank" style="text-decoration: none; color: inherit;">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
           <div>
-            <div class="icon">💪</div>
-            <h3>FitFuel</h3>
-            <p>Fitness & nutrition tracker with workout plans.</p>
+            <div class="icon">📊</div>
+            <h3>LogChain</h3>
+            <p>Centralized logging & alerting system with Redis caching and email alerts.</p>
           </div>
           <div class="tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">Cloudflare</span>
-            <span class="tag">PWA</span>
+            <span class="tag">Django</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Redis</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bento-item bento-md">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div class="icon">🤖</div>
+            <h3>CityBot</h3>
+            <p>Serverless chatbot using AWS Lex V2 for shortest-path graph queries. REST API with BFS over DynamoDB.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">AWS Lambda</span>
+            <span class="tag">Lex V2</span>
+            <span class="tag">DynamoDB</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bento-item bento-sm">
+        <a href="https://github.com/panshuljindal/IlliniCMS" target="_blank" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+          <div>
+            <div class="icon">🎓</div>
+            <h3>Illini CMS</h3>
+            <p>Academic tracking with role-based access, JWT auth, and live notifications.</p>
+          </div>
+          <div class="tags">
+            <span class="tag">NodeJS</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">Redis</span>
           </div>
         </a>
       </div>
@@ -894,22 +922,23 @@
         <h4><i class="fas fa-code"></i> Languages</h4>
         <div class="tags">
           <span class="tag">Python</span>
-          <span class="tag">Go</span>
-          <span class="tag">Java</span>
+          <span class="tag">Golang</span>
+          <span class="tag">JavaScript</span>
           <span class="tag">TypeScript</span>
-          <span class="tag">C#</span>
+          <span class="tag">Java</span>
           <span class="tag">SQL</span>
+          <span class="tag">C/C++</span>
         </div>
       </div>
       
       <div class="skill-card">
-        <h4><i class="fas fa-brain"></i> AI/ML</h4>
+        <h4><i class="fas fa-server"></i> Frameworks</h4>
         <div class="tags">
-          <span class="tag">LangChain</span>
-          <span class="tag">OpenAI</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">RAG</span>
-          <span class="tag">Computer Vision</span>
+          <span class="tag">NodeJS</span>
+          <span class="tag">Express</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Flask</span>
+          <span class="tag">Django</span>
         </div>
       </div>
       
@@ -920,29 +949,20 @@
           <span class="tag">Azure</span>
           <span class="tag">GCP</span>
           <span class="tag">Docker</span>
-          <span class="tag">Kubernetes</span>
+          <span class="tag">CI/CD</span>
+          <span class="tag">GitHub Actions</span>
         </div>
       </div>
       
       <div class="skill-card">
         <h4><i class="fas fa-database"></i> Databases</h4>
         <div class="tags">
+          <span class="tag">MySQL</span>
           <span class="tag">PostgreSQL</span>
           <span class="tag">MongoDB</span>
-          <span class="tag">Redis</span>
           <span class="tag">DynamoDB</span>
+          <span class="tag">Redis</span>
           <span class="tag">Elasticsearch</span>
-        </div>
-      </div>
-      
-      <div class="skill-card">
-        <h4><i class="fas fa-server"></i> Backend</h4>
-        <div class="tags">
-          <span class="tag">FastAPI</span>
-          <span class="tag">Node.js</span>
-          <span class="tag">Django</span>
-          <span class="tag">gRPC</span>
-          <span class="tag">GraphQL</span>
         </div>
       </div>
       
@@ -950,10 +970,22 @@
         <h4><i class="fas fa-tools"></i> Tools</h4>
         <div class="tags">
           <span class="tag">Git</span>
-          <span class="tag">CI/CD</span>
+          <span class="tag">Postman</span>
           <span class="tag">Datadog</span>
-          <span class="tag">Kafka</span>
           <span class="tag">RabbitMQ</span>
+          <span class="tag">WebSockets</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+      
+      <div class="skill-card">
+        <h4><i class="fas fa-brain"></i> AI/ML</h4>
+        <div class="tags">
+          <span class="tag">OpenAI</span>
+          <span class="tag">RAG</span>
+          <span class="tag">Pinecone</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">PySpark</span>
         </div>
       </div>
     </div>
