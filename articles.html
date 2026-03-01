@@ -325,12 +325,9 @@
     }));
 
     // Animations
-    gsap.to('#backLink', { opacity: 1, y: 0, duration: 0.5, delay: 0.1, ease: 'power2.out', from: { y: 10 } });
-    gsap.from('#backLink', { opacity: 0, y: 10, duration: 0.5, delay: 0.1, ease: 'power2.out' });
-    gsap.from('#pageHeader', { opacity: 0, y: 20, duration: 0.6, delay: 0.2, ease: 'power2.out' });
-    gsap.to('#pageHeader', { opacity: 1, duration: 0 });
-    gsap.from('#comingSoon', { opacity: 0, y: 30, duration: 0.7, delay: 0.35, ease: 'power2.out' });
-    gsap.to('#comingSoon', { opacity: 1, duration: 0 });
+    gsap.fromTo('#backLink',   { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, delay: 0.1,  ease: 'power2.out' });
+    gsap.fromTo('#pageHeader', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.2,  ease: 'power2.out' });
+    gsap.fromTo('#comingSoon', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.35, ease: 'power2.out' });
   </script>
 </body>
 
