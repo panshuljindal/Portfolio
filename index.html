@@ -54,7 +54,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
   
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- GSAP -->
@@ -64,19 +64,19 @@
   
   <style>
     :root {
-      --accent: #6366f1;
-      --accent-dark: #4f46e5;
-      --accent-light: #a5b4fc;
-      --accent-bg: rgba(99, 102, 241, 0.06);
-      --bg: #faf9f7;
+      --accent: #3b82f6;
+      --accent-dark: #2563eb;
+      --accent-light: #93c5fd;
+      --accent-bg: rgba(59, 130, 246, 0.06);
+      --bg: #f0f4f8;
       --bg-surface: #ffffff;
-      --text-primary: #111827;
-      --text-secondary: #6b7280;
-      --text-muted: #9ca3af;
-      --border: rgba(0, 0, 0, 0.08);
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.2);
+      --shadow-sm: 0 1px 3px rgba(59, 130, 246, 0.06);
+      --shadow-md: 0 4px 20px rgba(59, 130, 246, 0.1);
+      --shadow-lg: 0 12px 40px rgba(59, 130, 246, 0.12);
       --radius: 16px;
     }
 
@@ -84,7 +84,7 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
       color: var(--text-primary);
       line-height: 1.7;
@@ -112,20 +112,20 @@
 
     .blob-1 {
       width: 600px; height: 600px;
-      background: rgba(99, 102, 241, 0.12);
+      background: rgba(59, 130, 246, 0.12);
       top: -200px; right: -100px;
     }
 
     .blob-2 {
       width: 500px; height: 500px;
-      background: rgba(236, 72, 153, 0.08);
+      background: rgba(59, 130, 246, 0.1);
       bottom: -150px; left: -100px;
       animation-delay: -8s;
     }
 
     .blob-3 {
       width: 400px; height: 400px;
-      background: rgba(99, 102, 241, 0.06);
+      background: rgba(59, 130, 246, 0.06);
       top: 50%; left: 40%;
       animation-delay: -16s;
     }
@@ -139,7 +139,7 @@
 
     /* Header */
     header {
-      background: rgba(250, 249, 247, 0.85);
+      background: rgba(240, 244, 248, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       padding: 1rem 4rem;
@@ -202,7 +202,7 @@
       border-radius: 50%;
       border: 3px solid var(--accent-light);
       margin-bottom: 2rem;
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.15);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.15);
       opacity: 0;
       object-fit: cover;
     }
@@ -266,13 +266,13 @@
       background: var(--accent);
       color: white;
       border: none;
-      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
     }
 
     .btn-primary:hover {
       background: var(--accent-dark);
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.35);
     }
 
     .btn-outline {
@@ -370,6 +370,7 @@
       text-align: center;
       opacity: 0;
       transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
     }
 
     .stat-card:hover {
@@ -401,6 +402,7 @@
       position: relative;
       overflow: hidden;
       opacity: 0;
+      box-shadow: var(--shadow-sm);
     }
 
     .experience-card::before {
@@ -482,6 +484,7 @@
       flex-direction: column;
       justify-content: space-between;
       opacity: 0;
+      box-shadow: var(--shadow-sm);
     }
 
     .bento-item::before { content: none; }
@@ -530,6 +533,7 @@
       border: 1px solid var(--border);
       transition: all 0.3s ease;
       opacity: 0;
+      box-shadow: var(--shadow-sm);
     }
 
     .skill-card:hover {
@@ -568,6 +572,7 @@
       text-decoration: none;
       color: inherit;
       opacity: 0;
+      box-shadow: var(--shadow-sm);
     }
 
     .contact-card:hover {
@@ -1195,9 +1200,9 @@
       start: 'top -50',
       onUpdate: (self) => {
         if (self.direction === 1) {
-          document.querySelector('header').style.background = 'rgba(250, 249, 247, 0.95)';
+          document.querySelector('header').style.background = 'rgba(240, 244, 248, 0.95)';
         } else if (window.scrollY < 50) {
-          document.querySelector('header').style.background = 'rgba(250, 249, 247, 0.85)';
+          document.querySelector('header').style.background = 'rgba(240, 244, 248, 0.85)';
         }
       }
     });
