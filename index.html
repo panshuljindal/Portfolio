@@ -274,6 +274,28 @@
     .contact-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
     .contact-card p { color: var(--text-secondary); font-size: 0.85rem; }
 
+    /* Open To Banner */
+    .open-to-banner { background: linear-gradient(135deg, var(--accent-bg) 0%, rgba(59,130,246,0.1) 100%); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius); padding: 1.5rem 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .open-to-banner .dot { width: 10px; height: 10px; background: #22c55e; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+    .open-to-banner .label { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.25rem; }
+    .open-to-banner .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .open-to-banner .pill { background: white; border: 1px solid rgba(59,130,246,0.2); color: var(--text-primary); padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+
+    /* Achievements */
+    .achievements-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .achievement-card { background: var(--bg-surface); border-radius: var(--radius); padding: 1.75rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm); text-align: center; transition: all 0.3s ease; opacity: 0; }
+    .achievement-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+    .achievement-card .achievement-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .achievement-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; }
+    .achievement-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* GitHub strip */
+    .github-strip { background: var(--bg-surface); border-radius: var(--radius); padding: 1.5rem 2rem; border: 1px solid var(--border); margin-top: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; opacity: 0; }
+    .github-strip .gh-stat { text-align: center; }
+    .github-strip .gh-stat .num { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+    .github-strip .gh-stat .lbl { font-size: 0.7rem; color: var(--text-muted); font-weight: 500; }
+    .github-strip img { border-radius: var(--radius-sm); }
+
     /* Blog */
     .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .blog-card { background: var(--bg-surface); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: all 0.35s ease; text-decoration: none; color: inherit; opacity: 0; display: flex; flex-direction: column; }
@@ -303,6 +325,7 @@
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .contact-grid { grid-template-columns: repeat(2, 1fr); }
       .blog-grid { grid-template-columns: repeat(2, 1fr); }
+      .achievements-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
       header { padding: 1rem 1.5rem; }
@@ -317,6 +340,7 @@
       .skills-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       .blog-grid { grid-template-columns: 1fr; }
+      .achievements-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-card { max-width: 280px; }
       .timeline { padding-left: 2rem; }
       .timeline-marker { left: -2rem; }
@@ -397,6 +421,18 @@
     <div class="section-header">
       <span class="section-label">01 &mdash; About</span>
       <h2>About Me</h2>
+    </div>
+    <div class="open-to-banner">
+      <span class="dot"></span>
+      <div>
+        <div class="label">Currently Open To</div>
+        <div class="pills">
+          <span class="pill">🤝 AI Consulting</span>
+          <span class="pill">🎙️ Speaking Engagements</span>
+          <span class="pill">🔬 Research Collaborations</span>
+          <span class="pill">💼 Freelance Projects</span>
+        </div>
+      </div>
     </div>
     <div class="about-text">
       <p>I'm an AI/ML Engineer with 1.5+ years of hands-on experience building scalable AI systems and deploying LLMs to production. Proven track record in multi-agent architectures, retrieval-augmented generation (RAG), and LLM fine-tuning. MS in Computer Science from UIUC with a perfect 4.0 GPA.</p>
@@ -605,9 +641,51 @@
     </div>
   </section>
 
+  </section>
+
+  <section id="achievements">
+    <div class="section-header">
+      <span class="section-label">05 &mdash; Achievements</span>
+      <h2>Highlights &amp; Awards</h2>
+    </div>
+    <div class="achievements-grid">
+      <div class="achievement-card">
+        <div class="achievement-icon">🏆</div>
+        <h4>Perfect 4.0 GPA</h4>
+        <p>Maintained a flawless academic record throughout MS Computer Science at UIUC — one of the world's top CS programs.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🚀</div>
+        <h4>10M+ Users Impacted</h4>
+        <p>Built and scaled AI infrastructure at Kwikpic serving over 10 million users with 98.9% facial recognition accuracy.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">💰</div>
+        <h4>40% Cost Reduction</h4>
+        <p>Engineered serverless and auto-scaling solutions on AWS, cutting cloud costs by 40% while improving system reliability.</p>
+      </div>
+      <div class="achievement-card">
+        <div class="achievement-icon">🎓</div>
+        <h4>UIUC Research Publication</h4>
+        <p>Conducted research at RailTEC lab applying LLMs to railway infrastructure monitoring and NL2SQL query interfaces.</p>
+      </div>
+    </div>
+    <div class="github-strip">
+      <div>
+        <div style="font-size:0.8rem;font-weight:700;color:var(--text-secondary);margin-bottom:0.5rem;"><i class="fab fa-github"></i> &nbsp;GitHub Activity</div>
+        <img src="https://ghchart.rshah.org/3b82f6/panshuljindal" alt="Panshul Jindal GitHub contribution chart" loading="lazy" style="max-width:100%;height:auto;" onerror="this.parentElement.style.display='none'">
+      </div>
+      <div style="display:flex;gap:2rem;flex-wrap:wrap;">
+        <div class="gh-stat"><div class="num">20+</div><div class="lbl">Repositories</div></div>
+        <div class="gh-stat"><div class="num">3+</div><div class="lbl">Years Coding</div></div>
+        <div class="gh-stat"><div class="num">5+</div><div class="lbl">Open Source</div></div>
+      </div>
+    </div>
+  </section>
+
   <section id="education">
     <div class="section-header">
-      <span class="section-label">05 &mdash; Education</span>
+      <span class="section-label">06 &mdash; Education</span>
       <h2>Academic Background</h2>
     </div>
     <div class="timeline">
@@ -637,7 +715,7 @@
 
   <section id="blog">
     <div class="section-header">
-      <span class="section-label">06 &mdash; Blog</span>
+      <span class="section-label">07 &mdash; Blog</span>
       <h2>Writing &amp; Thinking</h2>
       <p>Sharing what I learn about LLMs, RAG, and building AI systems at scale.</p>
     </div>
@@ -665,7 +743,7 @@
 
   <section id="contact">
     <div class="section-header">
-      <span class="section-label">07 &mdash; Contact</span>
+      <span class="section-label">08 &mdash; Contact</span>
       <h2>Get In Touch</h2>
       <p>I'm always interested in hearing about new opportunities, collaborations, or just having a chat about technology.</p>
     </div>
@@ -763,6 +841,16 @@
       gsap.set(card, { y: 40 });
       gsap.to(card, { opacity: 1, y: 0, duration: 0.8, delay: i * 0.12, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' } });
     });
+
+    // Achievement cards
+    gsap.utils.toArray('.achievement-card').forEach((card, i) => {
+      gsap.set(card, { y: 30, scale: 0.96 });
+      gsap.to(card, { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: i * 0.1, ease: 'back.out(1.4)', scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none reverse' } });
+    });
+
+    // GitHub strip
+    gsap.set('.github-strip', { y: 20 });
+    gsap.to('.github-strip', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.github-strip', start: 'top 88%', toggleActions: 'play none none reverse' } });
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
