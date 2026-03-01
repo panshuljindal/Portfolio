@@ -10,6 +10,9 @@
   <meta name="description" content="Panshul Jindal – Software Engineer at Microsoft. Building scalable AI systems, LLMs, RAG pipelines, and multi-agent architectures. MS in Computer Science from UIUC." />
   <meta name="keywords" content="Panshul Jindal, AI Engineer, ML Engineer, LLM, RAG, Multi-Agent Systems, OpenAI, UIUC, Microsoft, Machine Learning, Deep Learning, NLP, Computer Vision, FastAPI, Python" />
   <meta name="author" content="Panshul Jindal" />
+  <meta name="theme-color" content="#3b82f6" />
+  <!-- Google Search Console verification: replace content with your actual verification code -->
+  <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
   
   <!-- Open Graph -->
   <meta property="og:title" content="Panshul Jindal | AI/ML Engineer" />
@@ -46,6 +49,40 @@
       "https://twitter.com/JindalPanshul"
     ],
     "knowsAbout": ["Artificial Intelligence", "Machine Learning", "Large Language Models", "RAG", "Multi-Agent Systems", "Python", "FastAPI"]
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does an AI/ML Engineer do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An AI/ML Engineer designs, builds, and deploys machine learning systems. This includes training models, building RAG pipelines, fine-tuning LLMs, and deploying scalable AI infrastructure to production."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is RAG (Retrieval-Augmented Generation)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "RAG is a technique that enhances LLM outputs by retrieving relevant documents from a vector database and injecting them into the prompt context, enabling more accurate and grounded responses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a multi-agent AI system?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A multi-agent AI system consists of multiple autonomous AI agents that collaborate, delegate tasks, and communicate to solve complex problems that a single model cannot handle alone."
+        }
+      }
+    ]
   }
   </script>
   
@@ -237,6 +274,16 @@
     .contact-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
     .contact-card p { color: var(--text-secondary); font-size: 0.85rem; }
 
+    /* Blog */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .blog-card { background: var(--bg-surface); border-radius: var(--radius); padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm); transition: all 0.35s ease; text-decoration: none; color: inherit; opacity: 0; display: flex; flex-direction: column; }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--accent-light); }
+    .blog-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 0.75rem; }
+    .blog-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.4; }
+    .blog-card p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.7; flex-grow: 1; margin-bottom: 1rem; }
+    .blog-meta { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+    .blog-meta i { font-size: 0.7rem; }
+
     /* Footer */
     footer { text-align: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); }
     footer .social-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
@@ -255,6 +302,7 @@
       .projects-grid { grid-template-columns: repeat(2, 1fr); }
       .skills-grid { grid-template-columns: repeat(2, 1fr); }
       .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
       header { padding: 1rem 1.5rem; }
@@ -268,6 +316,7 @@
       .projects-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
+      .blog-grid { grid-template-columns: 1fr; }
       .hero-card { max-width: 280px; }
       .timeline { padding-left: 2rem; }
       .timeline-marker { left: -2rem; }
@@ -290,6 +339,7 @@
     <a href="#experience">Experience</a>
     <a href="#projects">Projects</a>
     <a href="#skills">Skills</a>
+    <a href="#blog">Blog</a>
     <a href="#contact">Contact</a>
   </div>
 
@@ -300,6 +350,7 @@
       <a href="#experience">Experience</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </nav>
     <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
@@ -329,7 +380,7 @@
     </div>
     <div class="hero-right">
       <div class="hero-card">
-        <img src="images/Panshul.png" alt="Panshul Jindal">
+        <img src="images/Panshul.png" alt="Panshul Jindal - AI/ML Engineer at Microsoft" loading="lazy">
         <div class="hero-card-name">Panshul Jindal</div>
         <div class="hero-card-role">AI/ML Engineer</div>
         <div class="hero-stats">
@@ -554,9 +605,67 @@
     </div>
   </section>
 
+  <section id="education">
+    <div class="section-header">
+      <span class="section-label">05 &mdash; Education</span>
+      <h2>Academic Background</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content">
+          <span class="timeline-date">Aug 2023 &ndash; May 2025</span>
+          <h3>Master of Science, Computer Science</h3>
+          <div class="meta">
+            <img src="images/uiuc-logo.png" alt="University of Illinois Urbana-Champaign logo" style="width:24px;height:24px;border-radius:4px;" loading="lazy"> University of Illinois Urbana-Champaign (UIUC)
+          </div>
+          <ul>
+            <li>GPA: 4.0 / 4.0</li>
+            <li>Focus: Machine Learning, NLP, Distributed Systems</li>
+            <li>Research: NL2SQL systems and computer vision for structural diagnostics at RailTEC lab</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">NLP</span>
+            <span class="tag">Distributed Systems</span>
+            <span class="tag">4.0 GPA</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="section-header">
+      <span class="section-label">06 &mdash; Blog</span>
+      <h2>Writing &amp; Thinking</h2>
+      <p>Sharing what I learn about LLMs, RAG, and building AI systems at scale.</p>
+    </div>
+    <div class="blog-grid">
+      <a href="#blog" class="blog-card">
+        <div class="blog-tag">LLMs &bull; RAG</div>
+        <h3>Building Production-Grade RAG Pipelines: Lessons from 10M+ Users</h3>
+        <p>A deep dive into the pitfalls of RAG in production — chunking strategies, embedding model selection, hybrid search, and how to evaluate retrieval quality without going insane.</p>
+        <div class="blog-meta"><i class="fas fa-calendar"></i> Coming soon &nbsp;&bull;&nbsp; <i class="fas fa-clock"></i> 12 min read</div>
+      </a>
+      <a href="#blog" class="blog-card">
+        <div class="blog-tag">Multi-Agent &bull; Architecture</div>
+        <h3>Designing Multi-Agent Systems That Don't Fall Apart</h3>
+        <p>How to structure agent orchestration, handle failures gracefully, and build trust boundaries between agents. What I learned building TaskPilot and working on agentic systems at Microsoft.</p>
+        <div class="blog-meta"><i class="fas fa-calendar"></i> Coming soon &nbsp;&bull;&nbsp; <i class="fas fa-clock"></i> 10 min read</div>
+      </a>
+      <a href="#blog" class="blog-card">
+        <div class="blog-tag">Fine-tuning &bull; LLMs</div>
+        <h3>Fine-Tuning vs. Prompting: When to Train and When to Prompt</h3>
+        <p>A practical decision framework for choosing between few-shot prompting, RAG, and full fine-tuning — with real numbers from domain-specific AI agent work at Visiostack.</p>
+        <div class="blog-meta"><i class="fas fa-calendar"></i> Coming soon &nbsp;&bull;&nbsp; <i class="fas fa-clock"></i> 8 min read</div>
+      </a>
+    </div>
+  </section>
+
   <section id="contact">
     <div class="section-header">
-      <span class="section-label">05 &mdash; Contact</span>
+      <span class="section-label">07 &mdash; Contact</span>
       <h2>Get In Touch</h2>
       <p>I'm always interested in hearing about new opportunities, collaborations, or just having a chat about technology.</p>
     </div>
@@ -647,6 +756,12 @@
     gsap.utils.toArray('.contact-card').forEach((card, i) => {
       gsap.set(card, { y: 30 });
       gsap.to(card, { opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: 'back.out(1.4)', scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none reverse' } });
+    });
+
+    // Blog cards
+    gsap.utils.toArray('.blog-card').forEach((card, i) => {
+      gsap.set(card, { y: 40 });
+      gsap.to(card, { opacity: 1, y: 0, duration: 0.8, delay: i * 0.12, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 85%', toggleActions: 'play none none reverse' } });
     });
 
     // Smooth scroll
