@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stop Spoonfeeding the Model</title>
+<meta name="description" content="The fastest way to make an agent worse is to explain too much. On over-instruction, prompt debt, and briefing agents instead of scripting them." />
+<meta name="author" content="Panshul Jindal" />
+<meta name="theme-color" content="#FCFCFE" />
+<link rel="canonical" href="https://panshuljindal.com/blog/stop-spoonfeeding-the-model.html" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Stop Spoonfeeding the Model" />
+<meta property="og:description" content="The fastest way to make an agent worse is to explain too much. On over-instruction, prompt debt, and briefing agents instead of scripting them." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://panshuljindal.com/blog/stop-spoonfeeding-the-model.html" />
+<meta property="og:site_name" content="Panshul Jindal" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://panshuljindal.com/images/Panshul.png" />
+<meta property="og:image:alt" content="Panshul Jindal – AI/ML Engineer" />
+<meta property="article:published_time" content="2026-08-28" />
+<meta property="article:author" content="Panshul Jindal" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@JindalPanshul" />
+<meta name="twitter:creator" content="@JindalPanshul" />
+<meta name="twitter:title" content="Stop Spoonfeeding the Model" />
+<meta name="twitter:description" content="The fastest way to make an agent worse is to explain too much. On over-instruction, prompt debt, and briefing agents instead of scripting them." />
+<meta name="twitter:image" content="https://panshuljindal.com/images/Panshul.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Stop Spoonfeeding the Model",
+  "description": "The fastest way to make an agent worse is to explain too much. On over-instruction, prompt debt, and briefing agents instead of scripting them.",
+  "datePublished": "2026-08-28",
+  "author": { "@type": "Person", "name": "Panshul Jindal", "url": "https://panshuljindal.com" },
+  "publisher": { "@type": "Person", "name": "Panshul Jindal" },
+  "mainEntityOfPage": "https://panshuljindal.com/blog/stop-spoonfeeding-the-model.html",
+  "image": "https://panshuljindal.com/images/Panshul.png",
+  "keywords": ["AI Engineering", "LLM", "Agents", "Prompt Engineering"]
+}
+</script>
+<meta name="color-scheme" content="light" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    color-scheme:only light;   /* opt out of forced dark-mode inversion */
+    --paper:#FCFCFE;
+    --paper-raise:#FFFFFF;
+    --ink:#1A1D23;
+    --ink-soft:#5A616E;
+    --ink-faint:#9198A5;
+    --line:#ECEEF3;
+    --line-strong:#DBDFE8;
+    --accent:#2E5AAC;
+    --accent-deep:#244A8E;
+    --minus:#B34A38;
+    --minus-bg:#FBEDEA;
+    --plus:#2F7A54;
+    --plus-bg:#EAF4EE;
+    --measure:44rem;
+    --gutter:2.6rem;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;background:#FCFCFE;}
+  body{
+    margin:0;
+    background:#FCFCFE;
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:clamp(1.06rem,0.55vw + 0.96rem,1.22rem);
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  ::selection{background:#DCE5F4;color:var(--ink);}
+
+  .wrap{
+    max-width:var(--measure);
+    margin:0 auto;
+    padding:0 1.5rem;
+    background:#FCFCFE;
+    min-height:100vh;
+  }
+
+  /* ---------- shared type devices ---------- */
+  .eyebrow{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.72rem;
+    font-weight:700;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 1.1rem;
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+  }
+  .eyebrow::before{
+    content:"";
+    width:1.6rem;height:2px;
+    background:var(--accent);
+    display:inline-block;
+    flex:none;
+  }
+
+  h2{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:clamp(1.6rem,1.6vw + 1.1rem,2.15rem);
+    line-height:1.12;
+    letter-spacing:-0.015em;
+    margin:0 0 1.2rem;
+    color:var(--ink);
+  }
+
+  p{margin:0 0 1.35rem;}
+  a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--line-strong);transition:border-color .15s,color .15s;}
+  a:hover{color:var(--accent);border-color:var(--accent);}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
+
+  /* ---------- hero ---------- */
+  header.hero{
+    padding:clamp(3.5rem,9vh,7rem) 0 2.4rem;
+    border-bottom:1px solid var(--line);
+    background:#FCFCFE;
+  }
+  .hero .eyebrow{margin-bottom:1.6rem;}
+  .hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;
+    font-size:clamp(2.7rem,6vw + 1rem,4.6rem);
+    line-height:0.98;
+    letter-spacing:-0.03em;
+    margin:0 0 1.4rem;
+  }
+  .hero .deck{
+    font-size:clamp(1.2rem,0.8vw + 1.05rem,1.5rem);
+    line-height:1.42;
+    color:var(--ink-soft);
+    max-width:34rem;
+    margin:0 0 2.6rem;
+    font-style:italic;
+  }
+  .byline{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.75rem;
+    letter-spacing:0.04em;
+    color:var(--ink-faint);
+    text-transform:uppercase;
+  }
+  .byline b{color:var(--ink-soft);font-weight:500;}
+
+  /* ---------- diff block ---------- */
+  .diff{
+    margin:2.4rem 0 0.6rem;
+    background:var(--paper-raise);
+    border:1px solid var(--line-strong);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 1px 0 rgba(26,29,35,0.02),0 20px 44px -34px rgba(46,90,172,0.28);
+  }
+  .diff-head{
+    display:flex;
+    align-items:center;
+    gap:0.55rem;
+    padding:0.7rem 1rem;
+    border-bottom:1px solid var(--line);
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    color:var(--ink-faint);
+    background:#FBFCFE;
+  }
+  .dot{width:0.62rem;height:0.62rem;border-radius:50%;background:var(--line-strong);flex:none;}
+  .dot.a{background:#E7B8AE;} .dot.b{background:#ECDCA8;} .dot.c{background:#AFD4BE;}
+  .diff-head .fname{margin-left:0.5rem;}
+  .diff-body{
+    font-family:"JetBrains Mono",monospace;
+    font-size:clamp(0.78rem,0.4vw + 0.7rem,0.9rem);
+    line-height:1.85;
+    padding:0.7rem 0;
+  }
+  .row{
+    display:grid;
+    grid-template-columns:2.1rem 1fr;
+    padding:0 1rem 0 0;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .row .mk{
+    text-align:center;
+    user-select:none;
+    color:var(--ink-faint);
+    font-weight:700;
+  }
+  .row.del{background:var(--minus-bg);}
+  .row.del .mk{color:var(--minus);}
+  .row.del .tx{color:#8f3a2b;}
+  .row.add{background:var(--plus-bg);}
+  .row.add .mk{color:var(--plus);}
+  .row.add .tx{color:#276245;}
+  .row.gap{opacity:0;height:0.35rem;}
+  .diff-cap{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.74rem;
+    color:var(--ink-faint);
+    margin:0.9rem 0 0;
+    letter-spacing:0.02em;
+    line-height:1.5;
+  }
+
+  .diff-body .row:not(.gap){opacity:0;transform:translateY(4px);animation:rowin .5s ease forwards;}
+  .diff-body .row:nth-child(1){animation-delay:.05s;}
+  .diff-body .row:nth-child(2){animation-delay:.11s;}
+  .diff-body .row:nth-child(3){animation-delay:.17s;}
+  .diff-body .row:nth-child(4){animation-delay:.23s;}
+  .diff-body .row:nth-child(5){animation-delay:.29s;}
+  .diff-body .row:nth-child(6){animation-delay:.35s;}
+  .diff-body .row:nth-child(7){animation-delay:.44s;}
+  .diff-body .row:nth-child(8){animation-delay:.52s;}
+  @keyframes rowin{to{opacity:1;transform:none;}}
+
+  /* ---------- sections ---------- */
+  section{padding:3.4rem 0;border-bottom:1px solid var(--line);background:#FCFCFE;}
+  section:last-of-type{border-bottom:none;}
+  .lead-in{color:var(--ink-soft);font-size:1.02em;}
+
+  .mini{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.82em;
+    padding:0.06em 0.4em;
+    border-radius:4px;
+    white-space:nowrap;
+  }
+  .mini.d{background:var(--minus-bg);color:#8f3a2b;}
+  .mini.a{background:var(--plus-bg);color:#276245;}
+
+  /* ---------- pull quote ---------- */
+  .pull{
+    margin:3rem 0;
+    padding:0 0 0 1.6rem;
+    border-left:3px solid var(--accent);
+  }
+  .pull q{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:500;
+    font-size:clamp(1.35rem,1.4vw + 1.05rem,1.85rem);
+    line-height:1.28;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+    quotes:none;
+    font-style:normal;
+    display:block;
+  }
+
+  /* ---------- principles ---------- */
+  .principle{
+    display:grid;
+    grid-template-columns:var(--gutter) 1fr;
+    gap:1.1rem;
+    padding:1.7rem 0;
+    border-top:1px solid var(--line);
+  }
+  .principle:first-of-type{border-top:2px solid var(--ink);}
+  .principle .num{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.86rem;
+    font-weight:700;
+    color:var(--accent);
+    padding-top:0.42rem;
+    letter-spacing:0.02em;
+  }
+  .principle h3{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:1.28rem;
+    line-height:1.2;
+    letter-spacing:-0.01em;
+    margin:0 0 0.55rem;
+  }
+  .principle p{font-size:1.01em;margin-bottom:0.75rem;}
+  .principle p:last-child{margin-bottom:0;}
+
+  /* ---------- related work ---------- */
+  .reads{margin:2rem 0 0;padding:0;list-style:none;}
+  .reads li{
+    padding:1.15rem 0;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns:1fr;
+    gap:0.3rem;
+  }
+  .reads li:first-child{border-top:2px solid var(--ink);}
+  .reads .who{
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .reads .title-line{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:1.1rem;
+    line-height:1.25;
+  }
+  .reads .title-line a{border-bottom:1px solid var(--line-strong);}
+  .reads .note{font-size:0.98em;color:var(--ink-soft);line-height:1.5;}
+
+  /* ---------- closing / footer ---------- */
+  .closing h2{font-size:clamp(1.9rem,2.4vw + 1.1rem,2.7rem);}
+  footer{
+    padding:2.4rem 0 4rem;
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.76rem;
+    line-height:1.7;
+    color:var(--ink-faint);
+    letter-spacing:0.02em;
+    background:#FCFCFE;
+  }
+  footer .rule{height:2px;background:var(--ink);width:2.6rem;margin-bottom:1.2rem;}
+
+  @media (max-width:560px){
+    :root{--gutter:2rem;}
+    .principle{grid-template-columns:1fr;gap:0.3rem;}
+    .principle .num{padding-top:0;}
+    .hero{padding-top:2.8rem;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .diff-body .row{animation:none !important;opacity:1 !important;transform:none !important;}
+    a{transition:none;}
+  }
+  /* ---------- site chrome ---------- */
+  .backlink{
+    display:inline-flex;align-items:center;gap:0.55rem;
+    margin-top:2.2rem;
+    font-family:"JetBrains Mono",monospace;
+    font-size:0.72rem;font-weight:700;
+    letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--ink-faint);border-bottom:0;
+  }
+  .backlink:hover{color:var(--accent-deep);}
+  .post-foot-nav{display:flex;flex-wrap:wrap;gap:1.4rem;margin-bottom:1.2rem;}
+  .post-foot-nav a{
+    font-family:"JetBrains Mono",monospace;font-size:0.76rem;
+    color:var(--ink-soft);border-bottom:1px solid var(--line-strong);
+  }
+  .post-foot-nav a:hover{color:var(--accent-deep);border-color:var(--accent);}
+
+</style>
+</head>
+<body>
+
+<div class="wrap" data-article>
+
+  <a class="backlink" href="../blog.html">← All posts</a>
+
+  <header class="hero">
+    <p class="eyebrow">Field notes · Building production agents</p>
+    <h1>Stop Spoonfeeding&nbsp;the Model</h1>
+    <p class="deck">The fastest way to make an agent worse is to explain too much. We mistake control for rigor — and the prompt rots exactly like bad code.</p>
+    <p class="byline">28 August 2026 · <b>8 min read</b></p>
+
+    <div class="diff" role="img" aria-label="A before-and-after diff: a long over-instructed agent system prompt reduced to two lean lines.">
+      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">support-agent &nbsp;—&nbsp; same task, two briefings</span></div>
+      <div class="diff-body">
+        <div class="row del"><span class="mk">−</span><span class="tx">You are a helpful, professional customer-support agent.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Step 1: greet the user. Step 2: ask for their order ID.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Step 3: if the refund is under $50, approve it; else escalate.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Always be polite. Never over-promise. Do NOT go off-topic.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Do NOT hallucinate. Do NOT mention competitors. Do NOT…</span></div>
+        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">You help customers resolve order issues. Approve refunds under $50; escalate the rest.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: the orders API shows "paid" before the charge settles — wait for status=settled.</span></div>
+      </div>
+    </div>
+    <p class="diff-cap">Same task. One of these ages badly on the next model release.</p>
+  </header>
+
+  <section>
+    <p class="eyebrow">The tell</p>
+    <h2>It works. That's the problem.</h2>
+    <p>An over-instructed agent takes about ten seconds to spot. The system prompt reads like defensive code I'd have written on a day I didn't trust the runtime — every branch spelled out, every edge case pinned down in prose, nine numbered steps for something the model would have nailed in one. And here's what keeps the pattern alive: it works. The demo passes. The feature ships. Nobody looks again.</p>
+    <p>That "it works" is where the rot hides. Bad code works too. I can solve almost any problem with enough nested conditionals and copy-paste — the program runs, the tests go green, and I've quietly signed up for the next six months of maintenance. An over-stuffed prompt is that exact move in a different file. It passes today and breaks on the next model version, because I hardcoded behavior the model was about to handle on its own.</p>
+    <p>So I've started treating prompts the way I treat code I'll have to maintain, because that's what they are. A prompt is not an asset you pile up. It's a liability you carry.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Why we do it</p>
+    <h2>Control feels like diligence.</h2>
+    <p>Nobody over-instructs on purpose. It's a good instinct wearing the wrong outfit. You want the thing to behave in front of real users, so you reach for what makes code behave: nail down everything, leave nothing to chance. But an agent isn't a function I'm implementing. It's a capable teammate I'm briefing — and every step I narrate for it is a step I've taken away from it. The more I script, the worse it does the moment reality stops matching my script. In production, reality never matches the script.</p>
+    <p>There's a second reason, and it's the uncomfortable one: we get attached to our prompts the way we get attached to our PRs. That instruction block is something I wrote, defended in review, and now own — so it only grows. Every incident bolts on another line (<span class="mini d">never do X again</span>). Every review adds a clause. Nobody ever deletes anything, because deleting feels like admitting the line was never load-bearing. That's not engineering. That's ego with a commit message.</p>
+
+    <blockquote class="pull">
+      <q>Stop instructing the model. Hand it the suggestions and the gotchas, then be patient with the context. You're not writing a hack — you're writing a briefing.</q>
+    </blockquote>
+  </section>
+
+  <section>
+    <p class="eyebrow">A way to picture it</p>
+    <h2>The brain doesn't move the fingers.</h2>
+    <p>Picture yourself picking up a coffee cup. Your brain doesn't send a numbered list to each finger — <em>flex this knuckle thirty degrees, two newtons of grip, rotate the wrist</em>. It sets an intent ("grab the cup"), maybe one caution ("the handle's hot"), and trusts the hand to do the rest. Try to consciously drive every tendon and you'll be slower, clumsier, and you'll drop it.</p>
+    <p>That's an agent. The LLM is the brain — it thinks, it orchestrates, it decides what to do next. The tools are the hands — they're what actually reach out and act. When I over-instruct, I'm consciously controlling each finger: scripting the exact tool calls, in order, for a body that already knows how to move. It works in the demo the same way you can pick up a cup slowly while staring at your hand. It falls apart the second the cup is somewhere you didn't expect.</p>
+    <p>So I brief the brain and hand it good tools — then I let it reach.</p>
+
+    <div class="diff" role="img" aria-label="Before and after diff: hardcoded tool-call sequence versus tools plus intent.">
+      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">refund-agent &nbsp;—&nbsp; scripting the hands vs. briefing the brain</span></div>
+      <div class="diff-body">
+        <div class="row del"><span class="mk">−</span><span class="tx">lookup_order(id) → read status → if "settled",</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">check_refund_policy() → if eligible, issue_refund(),</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">then send_email("refund_confirmed"), then log().</span></div>
+        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Tools: lookup_order, issue_refund, send_email.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Resolve the refund if it's under $50 and the charge has settled.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: issue_refund isn't idempotent — never call it twice.</span></div>
+      </div>
+    </div>
+    <p class="diff-cap">Same hands. The second version lets the brain decide which one to use, and when.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">How I build now</p>
+    <h2>Five rules I actually follow.</h2>
+    <p class="lead-in">None of this is about writing less to look clever. It's about spending my words where they compound instead of where they decay.</p>
+
+    <div class="principle">
+      <div class="num">01</div>
+      <div>
+        <h3>Suggest, don't dictate.</h3>
+        <p>I give the model a rule of thumb, not a screenplay. "When something can't be undone, confirm before you do it" holds across a thousand situations I'll never enumerate. "If the message says <em>cancel</em>, open screen three" holds in exactly one. I write the heuristic and let the model apply judgment — because judgment is the whole reason I reached for a model instead of an if-statement.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="num">02</div>
+      <div>
+        <h3>Ship the gotchas, not the checklist.</h3>
+        <p>The model finds the happy path without me. What it can't know is the landmine I stepped on last week — so that's what I write down: the payments API that says <span class="mini d">paid</span> before the charge settles, the search index that lags writes by a couple of seconds, the "user" that's <span class="mini d">null</span> for accounts created before 2021, the webhook that fires twice on retry. Everything else, I let it work out. A good prompt reads less like a manual and more like me leaning over to say — before you start, watch out for this.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="num">03</div>
+      <div>
+        <h3>Patience is the technique.</h3>
+        <p>The lazy move is to keep tuning the sentence. The move that works is slower: give the model what it's actually missing. The domain rules. The real constraints. What "done" means here, specifically. The two things that always trip people up in this system. That's not a prompt trick — it's just doing the homework. And it's the part everyone skips, because homework doesn't feel clever.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="num">04</div>
+      <div>
+        <h3>Aim for the right altitude.</h3>
+        <p>There's a height I'm aiming for. Too low — if-this-then-that, hardcoded — and it shatters on the first real user I didn't imagine. Too high — "be helpful, use good judgment" — and it just guesses. I aim for the altitude a sharp teammate would want on day one: the goal, the boundaries, the traps, and room to think. Nothing I'd have to rewrite the day the model gets better.</p>
+      </div>
+    </div>
+
+    <div class="principle">
+      <div class="num">05</div>
+      <div>
+        <h3>Treat the prompt like code you'll delete.</h3>
+        <p>Every line I add is a line someone maintains, audits, and second-guesses the day the model shifts underneath it. So I hold each one to that bar: if a line only restates what the model already does well, it isn't a guardrail — it's debt. Most of my best prompt edits have been <span class="mini a">deletions</span>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="eyebrow">In practice</p>
+    <h2>The same move, three more times.</h2>
+    <p class="lead-in">Different agents, same discipline: cut the steps the model can infer, keep the one fact it can't. Every one of these got better after the diet.</p>
+
+    <div class="diff" role="img" aria-label="Before and after diff for a notification agent.">
+      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">notification-agent &nbsp;—&nbsp; before / after</span></div>
+      <div class="diff-body">
+        <div class="row del"><span class="mk">−</span><span class="tx">Write push copy. Max 40 chars. Start with an emoji.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Use urgency. Mention the % off. Give me two A/B variants.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Tone: friendly, not pushy. Never ALL CAPS. Never…</span></div>
+        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Draft two push variants for this promo.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: the preview truncates near 40 chars on Android — lead with the value, not the emoji.</span></div>
+      </div>
+    </div>
+    <p class="diff-cap">It already knows what good push copy looks like. It doesn't know your truncation limit.</p>
+
+    <div class="diff" role="img" aria-label="Before and after diff for a data ingest agent.">
+      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">ingest-agent &nbsp;—&nbsp; before / after</span></div>
+      <div class="diff-body">
+        <div class="row del"><span class="mk">−</span><span class="tx">Step 1: read the file. Step 2: check each column exists.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Step 3: parse the dates. Step 4: on a bad row, log and skip.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Step 5: dedupe. Step 6: insert. Step 7: …</span></div>
+        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Load this vendor CSV into the orders table; skip and report bad rows.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: this vendor sends dates as MM/DD/YYYY. Everyone else sends ISO.</span></div>
+      </div>
+    </div>
+    <p class="diff-cap">Seven steps it can infer. One quirk it can't.</p>
+
+    <div class="diff" role="img" aria-label="Before and after diff for a scheduling agent.">
+      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">scheduling-agent &nbsp;—&nbsp; before / after</span></div>
+      <div class="diff-body">
+        <div class="row del"><span class="mk">−</span><span class="tx">Check the calendar. Convert time zones. Add a 15-min buffer.</span></div>
+        <div class="row del"><span class="mk">−</span><span class="tx">Prefer mornings. Avoid Fridays. Confirm before booking. Then…</span></div>
+        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Book a 30-min intro with the client this week.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: their calendar is IST; ours renders UTC — double-check the offset.</span></div>
+      </div>
+    </div>
+    <p class="diff-cap">When to meet is a judgment call. The timezone trap is yours to flag.</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Related work</p>
+    <h2>I'm not the only one saying this.</h2>
+    <p>I didn't invent any of this — I just got tired of watching it get ignored. If you want the receipts behind the argument, here's the prior art worth reading. Same conclusion, arrived at from a dozen directions.</p>
+
+    <ul class="reads">
+      <li>
+        <span class="who">Anthropic · Engineering</span>
+        <span class="title-line"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective context engineering for AI agents</a></span>
+        <span class="note">The "right altitude" idea — the case against hardcoding brittle logic into a prompt. Backs rule 04.</span>
+      </li>
+      <li>
+        <span class="who">Anthropic · Engineering</span>
+        <span class="title-line"><a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">How we built our multi-agent research system</a></span>
+        <span class="note">Where "instill good heuristics, not rigid rules" comes from — and why it beat longer instructions. Backs rule 01.</span>
+      </li>
+      <li>
+        <span class="who">Sean Goedecke</span>
+        <span class="title-line"><a href="https://www.seangoedecke.com/prompts-are-technical-debt-too/" target="_blank" rel="noopener">Prompts are technical debt too</a></span>
+        <span class="note">The system prompts and config you ship decay like any other code. The bad-code analogy, made explicit.</span>
+      </li>
+      <li>
+        <span class="who">daily.dev · via Theo (T3)</span>
+        <span class="title-line"><a href="https://daily.dev/posts/your-prompts-are-tech-debt--blrldb7ib" target="_blank" rel="noopener">Your prompts are tech debt</a></span>
+        <span class="note">Prompt debt decays quietly — a January prompt can hurt you by February. Keep configs minimal; delete the stale ones.</span>
+      </li>
+      <li>
+        <span class="who">Eric Roby</span>
+        <span class="title-line"><a href="https://codingwithroby.substack.com/p/loop-engineering-stop-prompting-agents" target="_blank" rel="noopener">Loop Engineering: Stop Prompting Agents</a></span>
+        <span class="note">The "salty lesson," echoing Sutton's bitter one: stop fixing things by hand; build the loop that scales.</span>
+      </li>
+      <li>
+        <span class="who">arXiv · 2025</span>
+        <span class="title-line"><a href="https://arxiv.org/html/2510.22251v1" target="_blank" rel="noopener">The Prompting Inversion</a></span>
+        <span class="note">Evidence that elaborate procedural constraints start <em>hurting</em> as models get more capable. Less is more past a threshold.</span>
+      </li>
+      <li>
+        <span class="who">Medium</span>
+        <span class="title-line"><a href="https://medium.com/@ahmed.hafdi.contact/prompting-is-over-the-ai-skill-that-quietly-replaced-it-bf905f0e5161" target="_blank" rel="noopener">Prompting Is Over</a></span>
+        <span class="note">On why we stopped believing the words were the work — and where the leverage moved instead.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="closing">
+    <p class="eyebrow">The point</p>
+    <h2>Brief it. Then trust it.</h2>
+    <p>Next time you're about to add the tenth instruction, delete the first nine and watch what breaks. In my experience, less than you feared. Give the model the map and the landmines, then get out of its way. That's not laziness — it's the same taste that separates software I'm proud of from software that merely runs.</p>
+  </section>
+
+  <footer>
+    <div class="rule"></div>
+    <nav class="post-foot-nav">
+      <a href="../blog.html">← All posts</a>
+      <a href="../index.html">Home</a>
+      <a href="../Resume.pdf" target="_blank" rel="noopener">Résumé</a>
+      <a href="https://github.com/panshuljindal" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+    <div>&copy; <span data-year>2026</span> Panshul Jindal</div>
+  </footer>
+
+</div>
+<script src="../js/site.js" defer></script>
+<script src="../js/analytics.js" defer></script>
+</body>
+</html>

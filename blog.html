@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://panshuljindal.com/blog.html" />
+  <title>Blog | Panshul Jindal — Notes on AI systems &amp; engineering</title>
+  <meta name="description" content="Essays and field notes on LLM systems, retrieval-augmented generation, multi-agent architectures, and shipping AI to production — by Panshul Jindal." />
+  <meta name="author" content="Panshul Jindal" />
+  <meta name="theme-color" content="#fbfbfd" />
+
+  <meta property="og:title" content="Blog | Panshul Jindal" />
+  <meta property="og:description" content="Essays and field notes on LLM systems, RAG, multi-agent architectures, and shipping AI to production." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://panshuljindal.com/blog.html" />
+  <meta property="og:image" content="https://panshuljindal.com/images/Panshul.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@JindalPanshul" />
+  <meta name="twitter:title" content="Blog | Panshul Jindal" />
+  <meta name="twitter:description" content="Notes on LLM systems, RAG, and shipping AI to production." />
+  <meta name="twitter:image" content="https://panshuljindal.com/images/Panshul.png" />
+
+  <link rel="icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/site.css" />
+  <link rel="stylesheet" href="css/blog.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+
+  <div class="ambient" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+  </div>
+
+  <!-- ============================================================ Nav -->
+  <header class="nav">
+    <div class="shell">
+      <a class="brand" href="index.html" aria-label="Panshul Jindal — home">
+        <span class="brand-mark">PJ</span>
+        <span class="brand-text">Panshul Jindal</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html#about">About</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="blog.html" class="is-active">Blog</a>
+      </nav>
+      <a class="nav-cta" href="index.html#contact"><i class="fas fa-paper-plane"></i> Get in touch</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" aria-label="Mobile menu">
+    <div class="drawer-head">
+      <span class="brand"><span class="brand-mark">PJ</span></span>
+      <button class="drawer-close" id="drawerClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    </div>
+    <nav>
+      <a href="index.html#about">About <i class="fas fa-arrow-right"></i></a>
+      <a href="index.html#experience">Experience <i class="fas fa-arrow-right"></i></a>
+      <a href="index.html#projects">Projects <i class="fas fa-arrow-right"></i></a>
+      <a href="blog.html">Blog <i class="fas fa-arrow-right"></i></a>
+      <a href="index.html#contact">Contact <i class="fas fa-arrow-right"></i></a>
+    </nav>
+    <div class="drawer-foot">
+      <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/panshuljindal" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://twitter.com/JindalPanshul" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="mailto:panshuljindal@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    </div>
+  </aside>
+
+  <main id="main">
+    <!-- ======================================================= Hero -->
+    <section class="blog-hero">
+      <div class="shell">
+        <span class="eyebrow reveal">Writing</span>
+        <h1 class="reveal" data-delay="70">Notes from the build.</h1>
+        <p class="reveal" data-delay="140">
+          Essays and field notes on LLM systems, retrieval, agent architectures, and
+          the unglamorous engineering that turns a demo into a product.
+        </p>
+
+        <!-- Filters are generated from the data-tags on each post row.
+             Add a new tag to a post and it appears here automatically. -->
+        <div class="filters reveal" id="filters" data-delay="200">
+          <button class="filter is-on" data-filter="all">All</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== Posts -->
+    <section class="section" style="padding-top:1.5rem">
+      <div class="shell">
+        <!-- ================================================================
+             POST LIST
+             To add a post: copy one <a class="post-row"> block below,
+             point href at your new file in /blog, and edit the fields.
+             `data-tags` drives the filter buttons above (space-separated).
+             Keep newest first.
+             ================================================================ -->
+        <div class="posts" id="posts" data-stagger="90">
+
+          <a class="post-row card reveal" href="blog/stop-spoonfeeding-the-model.html" data-track="blog:stop-spoonfeeding-the-model">
+            <div class="post-when">
+              Aug 28
+              <span class="yr">2026</span>
+            </div>
+            <div class="post-main">
+              <h2>Stop Spoonfeeding the Model</h2>
+              <p>
+                The fastest way to make an agent worse is to explain too much.
+                On over-instruction, prompt debt, and briefing agents instead of
+                scripting them.
+              </p>
+              <div class="post-meta">
+                <span class="post-read"><i class="far fa-clock"></i> 8 min read</span>
+              </div>
+            </div>
+            <span class="post-go"><i class="fas fa-arrow-right"></i></span>
+          </a>
+
+          <a class="post-row card reveal"
+             href="https://medium.com/@panshuljindal/what-an-agent-tells-its-future-self-31783deb4ec4"
+             target="_blank" rel="noopener" data-track="blog:what-an-agent-tells-its-future-self">
+            <div class="post-when">
+              Jul 21
+              <span class="yr">2026</span>
+            </div>
+            <div class="post-main">
+              <h2>What an Agent Tells Its Future Self</h2>
+              <p>
+                Long-running agents need to hand off to their own next run. On the
+                split between history, state, and knowledge — and the smallest
+                checkpoint-and-resume loop that actually works.
+              </p>
+              <div class="post-meta">
+                <span class="post-read"><i class="far fa-clock"></i> 9 min read</span>
+                <span class="post-read"><i class="fab fa-medium"></i> On Medium</span>
+              </div>
+            </div>
+            <span class="post-go"><i class="fas fa-arrow-up-right-from-square"></i></span>
+          </a>
+
+        </div>
+
+        <!-- Shown by JS when a filter matches nothing -->
+        <div class="empty" id="empty" hidden>
+          <i class="far fa-folder-open"></i>
+          <h3>Nothing here yet</h3>
+          <p>No posts match that filter.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================= Footer -->
+  <footer class="footer">
+    <div class="shell">
+      <div class="footer-top">
+        <div class="footer-blurb">
+          <a class="brand" href="index.html"><span class="brand-mark">PJ</span><span class="brand-text">Panshul Jindal</span></a>
+          <p>AI/ML Engineer building LLM systems, RAG pipelines, and multi-agent architectures that survive production.</p>
+        </div>
+        <div class="footer-cols">
+          <div class="footer-col">
+            <h5>Explore</h5>
+            <a href="index.html#about">About</a>
+            <a href="index.html#experience">Experience</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="blog.html">Blog</a>
+          </div>
+          <div class="footer-col">
+            <h5>Elsewhere</h5>
+            <a href="https://github.com/panshuljindal" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://twitter.com/JindalPanshul" target="_blank" rel="noopener">Twitter</a>
+            <a href="Resume.pdf" target="_blank" rel="noopener">Résumé</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span data-year>2026</span> Panshul Jindal. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="https://github.com/panshuljindal" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://twitter.com/JindalPanshul" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="mailto:panshuljindal@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/site.js" defer></script>
+  <script src="js/analytics.js" defer></script>
+  <script>
+    /* Tag filters, generated from each post's data-tags attribute. */
+    document.addEventListener('DOMContentLoaded', function () {
+      var wrap = document.getElementById('filters');
+      var list = document.getElementById('posts');
+      var empty = document.getElementById('empty');
+      if (!wrap || !list) return;
+
+      var rows = Array.prototype.slice.call(list.querySelectorAll('.post-row'));
+      var tags = [];
+
+      rows.forEach(function (row) {
+        (row.dataset.tags || '').split(/\s+/).filter(Boolean).forEach(function (t) {
+          if (tags.indexOf(t) === -1) tags.push(t);
+        });
+      });
+
+      tags.sort().forEach(function (t) {
+        var b = document.createElement('button');
+        b.className = 'filter';
+        b.dataset.filter = t;
+        b.textContent = t;
+        wrap.appendChild(b);
+      });
+
+      // A lone "All" button is noise — only show the bar once there's something
+      // to filter by. .filters sets display:flex, which beats the hidden attribute.
+      if (!tags.length) { wrap.style.display = 'none'; return; }
+
+      wrap.addEventListener('click', function (e) {
+        var btn = e.target.closest('.filter');
+        if (!btn) return;
+
+        wrap.querySelectorAll('.filter').forEach(function (b) { b.classList.toggle('is-on', b === btn); });
+
+        var want = btn.dataset.filter;
+        var shown = 0;
+
+        rows.forEach(function (row) {
+          var has = want === 'all' || (row.dataset.tags || '').split(/\s+/).indexOf(want) !== -1;
+          row.classList.toggle('is-hidden', !has);
+          if (has) shown++;
+        });
+
+        if (empty) empty.hidden = shown > 0;
+      });
+    });
+  </script>
+</body>
+
+</html>
