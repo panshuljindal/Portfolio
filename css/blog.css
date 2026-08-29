@@ -25,12 +25,13 @@
 .filter.is-on { background: var(--ink); border-color: var(--ink); color: #fff; }
 
 /* Post list */
-.posts { display: grid; gap: 1.15rem; padding-bottom: 1rem; }
+.posts { display: grid; gap: 0; border-top: 1px solid var(--line); }
 
 .post-row {
   display: grid; grid-template-columns: 132px 1fr auto;
   gap: 1.75rem; align-items: center;
-  padding: 1.6rem 1.75rem; text-decoration: none; color: inherit;
+  padding: 2.25rem 0; text-decoration: none; color: inherit;
+  border-bottom: 1px solid var(--line);
 }
 .post-when {
   font-family: var(--mono); font-size: .78rem; color: var(--ink-3);
@@ -55,7 +56,7 @@
 }
 .post-row:hover .post-go {
   background: var(--accent); border-color: var(--accent); color: #fff;
-  transform: translateX(3px); box-shadow: var(--sh-accent);
+  transform: translateX(3px);
 }
 
 .post-row.is-hidden { display: none; }
@@ -163,10 +164,10 @@
   border: 1px solid var(--accent-line);
 }
 .prose pre {
-  background: #0f172a; color: #e2e8f0;
+  background: #1c1917; color: #e8e2d8;
   border-radius: var(--r-md); padding: 1.25rem 1.4rem;
   overflow-x: auto; font-size: .855rem; line-height: 1.65;
-  border: 1px solid #1e293b; margin-block: 1.75rem;
+  border: 1px solid #332e29; margin-block: 1.75rem;
   -webkit-overflow-scrolling: touch;
 }
 .prose pre code {
@@ -224,7 +225,7 @@
    Responsive
    -------------------------------------------------------------------------- */
 @media (max-width: 760px) {
-  .post-row { grid-template-columns: 1fr auto; gap: 1rem 1.15rem; padding: 1.35rem; }
+  .post-row { grid-template-columns: 1fr auto; gap: 1rem 1.15rem; padding: 1.75rem 0; }
   .post-when { grid-column: 1 / -1; order: -1; }
   .post-when .yr { display: inline; }
   .prose { font-size: 1rem; }

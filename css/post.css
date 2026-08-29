@@ -1,29 +1,29 @@
 /* ==========================================================================
    Shared article theme
-   One blue, one type system, shared by every post so articles read as part
-   of the site rather than as standalone pages.
+   One warm accent, one type system, shared by every post so articles read as
+   part of the site rather than as standalone pages.
    ========================================================================== */
 
 :root {
   color-scheme: only light;          /* opt out of forced dark-mode inversion */
 
   /* Palette — mirrors css/site.css */
-  --accent: #2563eb;
-  --accent-deep: #1d4ed8;
-  --accent-soft: #dbeafe;
-  --accent-tint: rgba(37, 99, 235, .07);
-  --accent-line: rgba(37, 99, 235, .16);
+  --accent: #9c5333;
+  --accent-deep: #7d4128;
+  --accent-soft: #efe3d9;
+  --accent-tint: rgba(156, 83, 51, .06);
+  --accent-line: rgba(156, 83, 51, .22);
 
-  --paper: #fbfbfd;
-  --paper-raise: #ffffff;
-  --paper-alt: #f4f5f9;
+  --paper: #faf8f4;
+  --paper-raise: #fffdfa;
+  --paper-alt: #f2eee7;
 
-  --ink: #0b1120;
-  --ink-soft: #475569;
-  --ink-faint: #7c8798;
+  --ink: #1c1917;
+  --ink-soft: #57534e;
+  --ink-faint: #7d766e;
 
-  --line: #e7e9f0;
-  --line-strong: #d6dae6;
+  --line: #e8e2d8;
+  --line-strong: #d8d0c3;
 
   /* Semantic pair, desaturated to sit beside the blue rather than fight it */
   --plus: #2f7a54;
