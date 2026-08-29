@@ -159,8 +159,11 @@
 
           <div class="portrait reveal" data-delay="200">
             <div class="portrait-frame">
-              <img src="images/panshul-hero.jpg" data-fallback="images/Panshul.png"
-                   alt="Panshul Jindal" width="680" height="850" />
+              <picture>
+                <source media="(max-width: 700px)" srcset="images/panshul-avatar.jpg" />
+                <img src="images/panshul-hero.jpg" data-fallback="images/Panshul.png"
+                     alt="Panshul Jindal" width="680" height="850" />
+              </picture>
               <div class="portrait-caption">
                 <div class="name">Panshul Jindal</div>
                 <div class="role"><i class="fas fa-location-dot"></i> AI/ML Engineer · USA</div>
@@ -702,7 +705,6 @@
   </footer>
 
   <script src="js/site.js" defer></script>
-  <script src="js/analytics.js" defer></script>
 </body>
 
 </html>

@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /stats.html
-Disallow: /api/
 
 Sitemap: https://panshuljindal.com/sitemap.xml
