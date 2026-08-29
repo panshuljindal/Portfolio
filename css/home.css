@@ -239,6 +239,31 @@
 }
 
 /* --------------------------------------------------------------------------
+   Achievements
+   -------------------------------------------------------------------------- */
+.achv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.15rem; }
+.achv { padding: 1.5rem; }
+.achv-icon {
+  width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+  background: var(--accent-tint); color: var(--accent); font-size: .85rem;
+  margin-bottom: 1.05rem;
+}
+.achv h4 { font-size: .95rem; font-weight: 700; letter-spacing: -.015em; margin-bottom: .45rem; }
+.achv p { font-size: .82rem; color: var(--ink-3); line-height: 1.6; }
+.achv-lead { border-color: var(--accent-line); box-shadow: var(--sh-md); }
+.achv-lead .achv-icon { background: var(--accent); color: #fff; }
+
+/* Starred line items — the ones worth reading first */
+.job li.star { color: var(--ink); font-weight: 600; }
+.job li.star::before {
+  content: '★'; background: none; border-radius: 0;
+  width: auto; height: auto; left: -.05em; top: .1em;
+  color: var(--accent); font-size: .82rem; line-height: 1;
+}
+.fact-star { border-color: var(--accent-line); background: var(--accent-tint); }
+.fact-star .fact-icon { background: var(--accent); color: #fff; }
+
+/* --------------------------------------------------------------------------
    Contact
    -------------------------------------------------------------------------- */
 .contact-panel {
@@ -274,6 +299,7 @@
   .stat-chip { right: -14px; }
   .about-grid { grid-template-columns: 1fr; gap: 2.25rem; }
   .skills { grid-template-columns: repeat(2, 1fr); }
+  .achv-grid { grid-template-columns: repeat(2, 1fr); }
   .featured-body { grid-template-columns: 1fr; gap: 1.75rem; }
   .featured-visual { width: 100%; height: 130px; }
 }
@@ -282,6 +308,7 @@
   .stats { grid-template-columns: repeat(2, 1fr); }
   .projects { grid-template-columns: 1fr; }
   .skills { grid-template-columns: 1fr; }
+  .achv-grid { grid-template-columns: 1fr; }
   .contact-panel { padding: 2.5rem 1.5rem; }
   .contact-links { gap: 1.15rem; }
   .job-card { padding: 1.35rem 1.25rem; }
