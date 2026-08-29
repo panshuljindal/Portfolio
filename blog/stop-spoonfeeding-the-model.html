@@ -264,7 +264,7 @@
     <p class="eyebrow">Field notes · Building production agents</p>
     <h1>Stop Spoonfeeding&nbsp;the Model</h1>
     <p class="deck">The fastest way to make an agent worse is to explain too much. We mistake control for rigor — and the prompt rots exactly like bad code.</p>
-    <p class="byline"><span class="who">By Panshul Jindal</span> <span class="sep">·</span> 28 August 2026 <span class="sep">·</span> 8 min read</p>
+    <p class="byline"><span class="who">By Panshul Jindal</span> <span class="sep">·</span> 28 August 2026 <span class="sep">·</span> 9 min read</p>
   </div>
 </header>
 
@@ -367,6 +367,10 @@
       </div>
     </div>
     <p class="diff-cap">Same hands. The second version lets the brain decide which one to use, and when.</p>
+
+    <p>Now look at that last line again — <em>issue_refund isn't idempotent, never call it twice</em>. I wrote that for years before I noticed what it actually is. That's not a gotcha. That's a bug I decided to solve with a sentence.</p>
+    <p>A perfectly obedient model still double-refunds when the request times out after the call already landed, when the webhook fires twice, when two agents pick up the same ticket. The instruction was never the control — it just felt like one. Which points at the move I now reach for first: <strong>the strongest prompt deletion is usually not a prompt edit at all. It's a tool edit.</strong> Give <code class="inline">issue_refund</code> an idempotency key and that line deletes itself permanently, for every model I will ever run.</p>
+    <p>That's the general test. If I have to write a constraint once, it might be a real landmine. If I have to write it five times, my tool is wrong. The prompt carries intent and traps. The tools carry the invariants.</p>
   </section>
 
   <section>
@@ -417,8 +421,8 @@
 
   <section>
     <p class="eyebrow">In practice</p>
-    <h2>The same move, three more times.</h2>
-    <p class="lead-in">Different agents, same discipline: cut the steps the model can infer, keep the one fact it can't. Every one of these got better after the diet.</p>
+    <h2>The same move, twice more.</h2>
+    <p class="lead-in">Different agents, same discipline: cut the steps the model can infer, keep the facts it can't — and push the hard requirements somewhere they can actually be enforced.</p>
 
     <div class="diff" role="img" aria-label="Before and after diff for a notification agent.">
       <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">notification-agent &nbsp;—&nbsp; before / after</span></div>
@@ -427,11 +431,11 @@
         <div class="row del"><span class="mk">−</span><span class="tx">Use urgency. Mention the % off. Give me two A/B variants.</span></div>
         <div class="row del"><span class="mk">−</span><span class="tx">Tone: friendly, not pushy. Never ALL CAPS. Never…</span></div>
         <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
-        <div class="row add"><span class="mk">+</span><span class="tx">Draft two push variants for this promo.</span></div>
+        <div class="row add"><span class="mk">+</span><span class="tx">Draft two A/B push variants for this promo. Name the discount.</span></div>
         <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: the preview truncates near 40 chars on Android — lead with the value, not the emoji.</span></div>
       </div>
     </div>
-    <p class="diff-cap">It already knows what good push copy looks like. It doesn't know your truncation limit.</p>
+    <p class="diff-cap">The requirement stays — it has to name the discount. What goes is the tone coaching. It already knows what good push copy sounds like; it can't know your truncation limit.</p>
 
     <div class="diff" role="img" aria-label="Before and after diff for a data ingest agent.">
       <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">ingest-agent &nbsp;—&nbsp; before / after</span></div>
@@ -444,19 +448,8 @@
         <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: this vendor sends dates as MM/DD/YYYY. Everyone else sends ISO.</span></div>
       </div>
     </div>
-    <p class="diff-cap">Seven steps it can infer. One quirk it can't.</p>
+    <p class="diff-cap">The steps it can infer. Dedupe didn't move into the prompt — it moved into a unique index, where it can't be forgotten. The date quirk is all that's left for me to say.</p>
 
-    <div class="diff" role="img" aria-label="Before and after diff for a scheduling agent.">
-      <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">scheduling-agent &nbsp;—&nbsp; before / after</span></div>
-      <div class="diff-body">
-        <div class="row del"><span class="mk">−</span><span class="tx">Check the calendar. Convert time zones. Add a 15-min buffer.</span></div>
-        <div class="row del"><span class="mk">−</span><span class="tx">Prefer mornings. Avoid Fridays. Confirm before booking. Then…</span></div>
-        <div class="row gap"><span class="mk"></span><span class="tx"></span></div>
-        <div class="row add"><span class="mk">+</span><span class="tx">Book a 30-min intro with the client this week.</span></div>
-        <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: their calendar is IST; ours renders UTC — double-check the offset.</span></div>
-      </div>
-    </div>
-    <p class="diff-cap">When to meet is a judgment call. The timezone trap is yours to flag.</p>
   </section>
 
   <section>
@@ -467,40 +460,58 @@
     <ul class="reads">
       <li>
         <span class="who">Anthropic · Engineering</span>
+        <span class="title-line"><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a></span>
+        <span class="note">"Find the simplest solution possible, and only increase complexity when needed." The whole argument, in one sentence, from the people shipping the models.</span>
+      </li>
+      <li>
+        <span class="who">Anthropic · Engineering</span>
         <span class="title-line"><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Effective context engineering for AI agents</a></span>
-        <span class="note">The "right altitude" idea — the case against hardcoding brittle logic into a prompt. Backs rule 04.</span>
+        <span class="note">Where "right altitude" comes from — and the case against hardcoding brittle logic into a prompt. Backs rule 04. Worth noting they're careful about this: minimal doesn't mean short, it means <em>sufficient</em>.</span>
       </li>
       <li>
         <span class="who">Anthropic · Engineering</span>
         <span class="title-line"><a href="https://www.anthropic.com/engineering/multi-agent-research-system" target="_blank" rel="noopener">How we built our multi-agent research system</a></span>
-        <span class="note">Where "instill good heuristics, not rigid rules" comes from — and why it beat longer instructions. Backs rule 01.</span>
+        <span class="note">Where "instill good heuristics, not rigid rules" comes from — the design principle behind Claude Research. Backs rule 01.</span>
+      </li>
+      <li>
+        <span class="who">Rich Sutton · 2019</span>
+        <span class="title-line"><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html" target="_blank" rel="noopener">The Bitter Lesson</a></span>
+        <span class="note">Two pages, written before any of this. Researchers kept trying to hand-encode human knowledge, "but it always got in the way." Every prompt I've over-written is that mistake at a smaller scale.</span>
+      </li>
+      <li>
+        <span class="who">Liu et al. · TACL 2023</span>
+        <span class="title-line"><a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener">Lost in the Middle: How Language Models Use Long Contexts</a></span>
+        <span class="note">The mechanism, peer-reviewed: performance is highest at the start and end of the context and degrades in the middle. A wall of instructions buries your one real constraint in exactly the worst place.</span>
+      </li>
+      <li>
+        <span class="who">Imran Khan · arXiv 2025</span>
+        <span class="title-line"><a href="https://arxiv.org/abs/2510.22251" target="_blank" rel="noopener">You Don't Need Prompt Engineering Anymore: The Prompting Inversion</a></span>
+        <span class="note">Heavy procedural constraints beat plain chain-of-thought on GPT-4o and then <em>lost</em> to it on GPT-5 — the author calls it the guardrail-to-handcuff transition. One benchmark, one preprint, so hold it loosely; but it's the shape I keep seeing.</span>
       </li>
       <li>
         <span class="who">Sean Goedecke</span>
         <span class="title-line"><a href="https://www.seangoedecke.com/prompts-are-technical-debt-too/" target="_blank" rel="noopener">Prompts are technical debt too</a></span>
-        <span class="note">The system prompts and config you ship decay like any other code. The bad-code analogy, made explicit.</span>
-      </li>
-      <li>
-        <span class="who">daily.dev · via Theo (T3)</span>
-        <span class="title-line"><a href="https://daily.dev/posts/your-prompts-are-tech-debt--blrldb7ib" target="_blank" rel="noopener">Your prompts are tech debt</a></span>
-        <span class="note">Prompt debt decays quietly — a January prompt can hurt you by February. Keep configs minimal; delete the stale ones.</span>
+        <span class="note">Goes further than I do: prompts are a <em>worse</em> form of debt than code, because they decay silently and every model upgrade can break a working one. Theo covered it in <a href="https://www.youtube.com/watch?v=WnBx1Vi7M6w" target="_blank" rel="noopener">More Prompts = Worse Code?</a> if you'd rather watch than read.</span>
       </li>
       <li>
         <span class="who">Eric Roby</span>
         <span class="title-line"><a href="https://codingwithroby.substack.com/p/loop-engineering-stop-prompting-agents" target="_blank" rel="noopener">Loop Engineering: Stop Prompting Agents</a></span>
-        <span class="note">The "salty lesson," echoing Sutton's bitter one: stop fixing things by hand; build the loop that scales.</span>
+        <span class="note">Where I found Swyx's "salty lesson" — the agent-era echo of Sutton's bitter one: don't fix things by hand; build the loop that scales.</span>
       </li>
       <li>
-        <span class="who">arXiv · 2025</span>
-        <span class="title-line"><a href="https://arxiv.org/html/2510.22251v1" target="_blank" rel="noopener">The Prompting Inversion</a></span>
-        <span class="note">Evidence that elaborate procedural constraints start <em>hurting</em> as models get more capable. Less is more past a threshold.</span>
-      </li>
-      <li>
-        <span class="who">Medium</span>
+        <span class="who">Ahmed Hafdi · Medium</span>
         <span class="title-line"><a href="https://medium.com/@ahmed.hafdi.contact/prompting-is-over-the-ai-skill-that-quietly-replaced-it-bf905f0e5161" target="_blank" rel="noopener">Prompting Is Over</a></span>
         <span class="note">On why we stopped believing the words were the work — and where the leverage moved instead.</span>
       </li>
     </ul>
+  </section>
+
+  <section>
+    <p class="eyebrow">The limit</p>
+    <h2>Where I don't do any of this.</h2>
+    <p>This argument has a boundary and it's worth saying out loud. It applies to open-ended work, where more than one path is a good one: drafting the copy, ingesting the weird file, judging whether a refund is reasonable.</p>
+    <p>It does not apply where the procedure <em>is</em> the product. If a step is regulatory, contractual, or safety-critical — a disclosure that must appear, an approval that must be recorded, an action that must never happen twice — I don't ask a model to use judgment where the system needs a guarantee. That goes into code: a validator, a policy engine, a state machine the model cannot route around.</p>
+    <p>"Brief the model" was never "let the model decide everything." It's a claim about where each kind of rule belongs. Soft judgment goes in the briefing. Hard constraints go in machinery. The failure I'm arguing against is the third option everybody actually picks — encoding a guarantee as a politely worded sentence and calling it a control.</p>
   </section>
 
   <section class="closing">
