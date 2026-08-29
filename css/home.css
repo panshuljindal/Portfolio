@@ -278,8 +278,11 @@
   .job-when { padding-top: 0; }
 }
 @media (max-width: 700px) {
-  .hero { padding-top: calc(var(--nav-h) + 2.5rem); }
+  .hero { padding-top: calc(var(--nav-h) + 2rem); }
+  .hero-grid { gap: 2.25rem; }
   .portrait { max-width: 420px; justify-self: center; }
+  .portrait-frame { aspect-ratio: 1 / 1; }
+  .portrait-frame img { object-position: center 18%; }
   .stat-chip { right: 14px; top: 14px; }
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stat { padding: 1.4rem 1rem 1.4rem 0; }
