@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What an Agent Tells Its Future Self</title>
+<meta name="description" content="A2S (Agent-to-Self) is a design question for long-running agents: what does an agent need to tell its future self across the seam between runs?" />
+<meta name="author" content="Panshul Jindal" />
+<meta name="theme-color" content="#fbfbfd" />
+<link rel="canonical" href="https://panshuljindal.com/blog/agent-to-self.html" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="What an Agent Tells Its Future Self" />
+<meta property="og:description" content="A2S (Agent-to-Self) is a design question for long-running agents: what does an agent need to tell its future self across the seam between runs?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://panshuljindal.com/blog/agent-to-self.html" />
+<meta property="og:site_name" content="Panshul Jindal" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://panshuljindal.com/images/og-agent-to-self.png" />
+<meta property="og:image:alt" content="One agent, two runs, and the handoff note that crosses the seam between them" />
+<meta property="article:published_time" content="2026-07-21" />
+<meta property="article:author" content="Panshul Jindal" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@JindalPanshul" />
+<meta name="twitter:creator" content="@JindalPanshul" />
+<meta name="twitter:title" content="What an Agent Tells Its Future Self" />
+<meta name="twitter:description" content="A2S (Agent-to-Self) is a design question for long-running agents: what does an agent need to tell its future self across the seam between runs?" />
+<meta name="twitter:image" content="https://panshuljindal.com/images/og-agent-to-self.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "What an Agent Tells Its Future Self",
+  "description": "A2S (Agent-to-Self) is a design question for long-running agents: what does an agent need to tell its future self across the seam between runs?",
+  "datePublished": "2026-07-21",
+  "author": { "@type": "Person", "name": "Panshul Jindal", "url": "https://panshuljindal.com" },
+  "publisher": { "@type": "Person", "name": "Panshul Jindal" },
+  "mainEntityOfPage": "https://panshuljindal.com/blog/agent-to-self.html",
+  "image": "https://panshuljindal.com/images/og-agent-to-self.png",
+  "keywords": ["AI Engineering", "LLM", "Agents", "Agent Memory", "Durable Execution"]
+}
+</script>
+
+<meta name="color-scheme" content="light" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/post.css" />
+
+<style>
+  /* The one component unique to this piece: the three-jobs legend. */
+  .jobs { display: grid; grid-template-columns: 1fr; gap: .9rem; margin: 1.8rem 0; }
+  @media (min-width: 640px) { .jobs { grid-template-columns: repeat(3, 1fr); } }
+  .jobcard {
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent);
+    border-radius: var(--r-md);
+    padding: 1.1rem 1.15rem;
+    background: var(--paper-raise);
+  }
+  .jobcard.state { border-top-color: var(--plus); }
+  .jobcard.history { border-top-color: var(--accent); }
+  .jobcard.knowledge { border-top-color: var(--minus); }
+  .jobcard .role { font-weight: 700; font-size: .95rem; letter-spacing: -.01em; margin-bottom: .3rem; }
+  .jobcard.state .role { color: var(--plus); }
+  .jobcard.history .role { color: var(--accent); }
+  .jobcard.knowledge .role { color: var(--minus); }
+  .jobcard .desc { font-size: .87rem; line-height: 1.55; color: var(--ink-soft); }
+  .jobcard .breaks { font-size: .8rem; color: var(--ink-faint); margin-top: .55rem; }
+  .loop-caption { font-size: .82rem; color: var(--ink-faint); text-align: center; margin-top: .7rem; }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+  <a class="backlink" href="../blog.html" data-track="post:back-to-blog">
+    <span aria-hidden="true">←</span> All posts
+  </a>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Thinking out loud · A2S</p>
+    <h1>What an agent tells its future self</h1>
+    <p class="deck">
+      Some of the hardest agent bugs don't live inside a step. They live in the
+      seams between runs — and we barely design that handoff on purpose.
+    </p>
+    <div class="byline">
+      <span class="who">By Panshul Jindal</span>
+      <span class="sep">·</span>
+      <span>21 July 2026</span>
+      <span class="sep">·</span>
+      <span>7 min read</span>
+      <span class="tag">Essay</span>
+      <span class="tag">Agent design</span>
+      <span class="tag">Memory</span>
+    </div>
+  </div>
+</header>
+
+<div class="hero-art">
+  <div class="wide">
+    <figure>
+      <!-- Two agent runs with a handoff note crossing the seam between them. -->
+      <svg viewBox="0 0 860 280" role="img" aria-label="An agent runs, sleeps, then wakes — passing a handoff note across the seam to its future self.">
+        <defs>
+          <linearGradient id="runGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#dbeafe"/>
+            <stop offset="1" stop-color="#eff6ff"/>
+          </linearGradient>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- timeline -->
+        <line x1="40" y1="200" x2="820" y2="200" stroke="#d6dae6" stroke-width="2"/>
+        <text x="40" y="232" font-family="Plus Jakarta Sans,sans-serif" font-size="12" fill="#7c8798">time →</text>
+
+        <!-- run 1 -->
+        <rect x="70" y="120" width="220" height="80" rx="12" fill="url(#runGrad)" stroke="#bfdbfe"/>
+        <circle cx="110" cy="160" r="16" fill="#fff" stroke="#2563eb" stroke-width="2"/>
+        <circle cx="104" cy="157" r="2.4" fill="#0b1120"/><circle cx="116" cy="157" r="2.4" fill="#0b1120"/>
+        <path d="M104,166 q6,5 12,0" stroke="#0b1120" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="140" y="156" font-family="Plus Jakarta Sans,sans-serif" font-size="15" font-weight="700" fill="#0b1120">Run #14</text>
+        <text x="140" y="176" font-family="Plus Jakarta Sans,sans-serif" font-size="11.5" fill="#7c8798">awake · working</text>
+
+        <!-- the seam -->
+        <line x1="360" y1="70" x2="360" y2="220" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4 5"/>
+        <text x="360" y="60" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#2563eb">the seam</text>
+        <text x="360" y="244" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">(asleep)</text>
+
+        <!-- handoff note -->
+        <g transform="translate(305,95)">
+          <rect x="0" y="0" width="110" height="60" rx="8" fill="#fff" stroke="#2563eb" stroke-width="1.5"/>
+          <line x1="14" y1="16" x2="96" y2="16" stroke="#bfdbfe" stroke-width="3" stroke-linecap="round"/>
+          <line x1="14" y1="28" x2="96" y2="28" stroke="#dbeafe" stroke-width="3" stroke-linecap="round"/>
+          <line x1="14" y1="40" x2="70" y2="40" stroke="#dbeafe" stroke-width="3" stroke-linecap="round"/>
+          <text x="55" y="78" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#2563eb">handoff →</text>
+        </g>
+        <path d="M250,130 C285,128 290,128 305,128" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <path d="M415,128 C560,128 545,128 600,130" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+
+        <!-- run 2 -->
+        <rect x="600" y="120" width="220" height="80" rx="12" fill="url(#runGrad)" stroke="#bfdbfe"/>
+        <circle cx="640" cy="160" r="16" fill="#fff" stroke="#2563eb" stroke-width="2"/>
+        <circle cx="634" cy="157" r="2.4" fill="#0b1120"/><circle cx="646" cy="157" r="2.4" fill="#0b1120"/>
+        <path d="M634,166 q6,5 12,0" stroke="#0b1120" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="670" y="156" font-family="Plus Jakarta Sans,sans-serif" font-size="15" font-weight="700" fill="#0b1120">Run #15</text>
+        <text x="670" y="176" font-family="Plus Jakarta Sans,sans-serif" font-size="11.5" fill="#7c8798">same agent · later</text>
+      </svg>
+      <figcaption>One agent, two runs, a nap in between. A2S is the question of what crosses that gap.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<article>
+  <div class="wrap" data-article>
+
+    <section id="seam">
+      <p class="lead">If you've shipped an agent that runs longer than a single request, you start to notice a strange failure pattern. The model calls the tool fine. The tool returns fine. The reasoning, in isolation, looks fine. Then the agent stops, comes back later, and somehow loses the thread of what it was doing.</p>
+
+      <p>That's the seam I'm interested in: not the cognition, but the handoff. The model didn't get dumber overnight; it woke up without the one fact, cursor, failed attempt, or next instruction it needed, and then confidently did the wrong thing. A lot of the hardest production failures I keep seeing cluster around that resume boundary.</p>
+
+      <p>That's the idea I'm poking at with Agent-to-Self — A2S. Not a standard. Not a protocol. Just a design question: <strong>when this agent wakes up tomorrow, what does it need to tell its future self?</strong> <em>(Different problem from agent-to-agent coordination, which is agents talking to each other across space. This is one agent talking to itself across time.)</em></p>
+    </section>
+
+    <section id="concept">
+      <p class="eyebrow">The reframe</p>
+      <h2>A2S is a design question, not a protocol</h2>
+
+      <p>The thing you actually ship is a background agent, a workflow, a durable object, a queue worker, a scheduled job — whatever fits your stack. A2S can sit on top of durable-execution tooling; it is the LLM-facing contract that lets the next run continue with intent instead of archeology.</p>
+
+      <p>A2S is not a new memory system. Temporary memory lives inside one run; checkpoints, logs, and RAG store different kinds of evidence. A2S is the small model-facing handoff that tells the next run what matters now.</p>
+
+      <p>It also gives failure somewhere to live: "I crashed, here's what my next self should do about it" becomes state, not an exception you forgot to read.</p>
+    </section>
+
+    <section id="three-jobs">
+      <p class="eyebrow">The core idea</p>
+      <h2>What's in the handoff: three jobs of memory</h2>
+
+      <p>Here's the part I'm most convinced about. When people say a long-running agent "needs memory," they're often mixing storage with presentation. The storage can be whatever you want; the A2S question is what you surface back to the LLM at wake-up. And that wake-up context usually has three different jobs hiding inside it.</p>
+
+      <div class="jobs">
+        <div class="jobcard state">
+          <div class="role">State</div>
+          <div class="desc">The next action and the variables that action depends on. Must be authoritative, exact, structured, lossless.</div>
+          <div class="breaks">Breaks if: it's fuzzy or re-summarized.</div>
+        </div>
+        <div class="jobcard history">
+          <div class="role">History</div>
+          <div class="desc">What already happened. A lossy recap derived from logs. Gives the model a sense of momentum.</div>
+          <div class="breaks">Breaks if: you confuse recap with the source of truth.</div>
+        </div>
+        <div class="jobcard knowledge">
+          <div class="role">Knowledge</div>
+          <div class="desc">Facts about the world and the task domain. Semantic, retrievable, tolerant of fuzziness.</div>
+          <div class="breaks">Breaks if: you treat it as control flow.</div>
+        </div>
+      </div>
+
+      <p><strong>State</strong> is "the next thing to do, and the data I need to do it." It has to be exact. If the next directive is <code class="inline">resume upload at chunk 7</code>, there is no acceptable fuzzy version of "7." This wants to be canonical structured data, written programmatically, carried across the gap unchanged.</p>
+
+      <p><strong>History</strong> is "what I've been doing." In the system, you may keep a lossless execution log. In the prompt, the agent usually needs a lossy model-friendly recap: a few sentences that explain momentum without replaying every event. The recap is useful, but it should not become the source of truth.</p>
+
+      <p><strong>Knowledge</strong> is "facts about the world that aren't specific to this run" — the API quirks, the domain rules, the stuff you'd look up. This is the job a vector database is genuinely good at. Semantic retrieval, fuzziness tolerated, no exact cursor required.</p>
+
+      <p>Now the punchline. One classic failure mode is using <em>one</em> tool — usually a vector DB — for all three. People dump state into RAG and then act shocked when the agent occasionally retrieves "resume at chunk 7" as "resume at chunk 2." Retrieval isn't broken; it is fuzzy by design, which is usually the wrong property for control flow. RAG is risky <em>as state</em> and useful <em>as knowledge</em>. Once you split the three jobs, the small hybrid design starts to feel obvious.</p>
+    </section>
+
+    <section id="shape">
+      <p class="eyebrow">The artifact</p>
+      <h2>A minimum viable A2S handoff</h2>
+
+      <p>If the three-jobs split is right, it should show up in the smallest implementation shape. To me, the minimum loop is almost boring: wake up, load the last checkpoint, do bounded work, write the next checkpoint, sleep.</p>
+
+      <figure>
+        <svg viewBox="0 0 720 170" role="img" aria-label="Minimum A2S loop: wake, load checkpoint, bounded work, write handoff, sleep.">
+          <defs>
+            <marker id="loopArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+              <path d="M0,0 L7,3 L0,6 Z" fill="#2563eb"/>
+            </marker>
+          </defs>
+          <rect x="18" y="54" width="104" height="58" rx="12" fill="#fff" stroke="#e7e9f0"/>
+          <rect x="158" y="54" width="112" height="58" rx="12" fill="#fff" stroke="#e7e9f0"/>
+          <rect x="306" y="54" width="112" height="58" rx="12" fill="#fff" stroke="#e7e9f0"/>
+          <rect x="454" y="54" width="112" height="58" rx="12" fill="#fff" stroke="#e7e9f0"/>
+          <rect x="602" y="54" width="100" height="58" rx="12" fill="#fff" stroke="#e7e9f0"/>
+          <text x="70" y="80" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#0b1120">Wake</text>
+          <text x="70" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">run starts</text>
+          <text x="214" y="80" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#2f7a54">Load state</text>
+          <text x="214" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">checkpoint</text>
+          <text x="362" y="80" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#0b1120">Work</text>
+          <text x="362" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">bounded time</text>
+          <text x="510" y="80" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#2563eb">Write handoff</text>
+          <text x="510" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">next self</text>
+          <text x="652" y="80" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="13" font-weight="700" fill="#0b1120">Sleep</text>
+          <text x="652" y="98" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">resume later</text>
+          <path d="M122,83 H151" stroke="#2563eb" stroke-width="2" marker-end="url(#loopArrow)"/>
+          <path d="M270,83 H299" stroke="#2563eb" stroke-width="2" marker-end="url(#loopArrow)"/>
+          <path d="M418,83 H447" stroke="#2563eb" stroke-width="2" marker-end="url(#loopArrow)"/>
+          <path d="M566,83 H595" stroke="#2563eb" stroke-width="2" marker-end="url(#loopArrow)"/>
+          <path d="M652,116 C652,152 70,152 70,119" stroke="#d6dae6" stroke-width="1.5" fill="none" stroke-dasharray="5 5" marker-end="url(#loopArrow)"/>
+        </svg>
+        <figcaption class="loop-caption">The whole implementation idea, before frameworks: checkpoint, work, handoff, resume.</figcaption>
+      </figure>
+
+      <p>Keep normal workflow guardrails around it — single owner, idempotent effects, trace IDs, schema versions, failure stops — but do not turn the handoff itself into a protocol.</p>
+
+      <p>The concrete artifact is the prompt that greets the agent when it wakes. Notice it has three slots: model-friendly history, authoritative state, and whatever knowledge needs to be retrieved separately.</p>
+
+      <p class="code-caption">Example wake-up prompt</p>
+      <pre aria-label="Example wake-up prompt"><span class="c-com"># You woke up. You're a long-running agent in run #15.</span>
+
+<span class="c-com">## What you've been doing  (history)</span>
+- runs #1-10: found the product catalog and stabilized the parser
+- runs #11-14: scraped pages 1-88; page 89 is the next cursor
+
+<span class="c-com">## Your exact instruction from last time  (canonical state)</span>
+Resume scraping at page 89. Parser config is below. Do NOT
+re-fetch pages you've already stored.
+
+<span class="c-com">## Checkpoint  (structured state)</span>
+&lt;the JSON payload below&gt;
+
+<span class="c-com">## Rules</span>
+1. Execute the instruction above immediately.
+2. If you near your time budget or hit a blocker, STOP.
+3. Call write_handoff() to leave a note for your next self.</pre>
+
+      <p>The headings aren't decoration — they're the taxonomy made physical. <strong>History</strong> is the narrative recap. <strong>State</strong> is the directive plus a structured checkpoint the agent doesn't have to re-derive. And critically, the directive is something the previous self <em>wrote on purpose</em>, not something this self reconstructs from a transcript.</p>
+
+      <p>The checkpoint itself can stay small. It doesn't need a framework; it needs to be honest about being the source of truth:</p>
+
+      <p class="code-caption">Example checkpoint payload</p>
+      <pre aria-label="Example checkpoint payload">{
+  <span class="c-key">"run_number"</span>: <span class="c-num">15</span>,
+  <span class="c-key">"status"</span>: <span class="c-str">"IN_PROGRESS"</span>,
+  <span class="c-key">"next_action"</span>: <span class="c-str">"scrape_from_page"</span>,
+  <span class="c-key">"cursor"</span>: { <span class="c-key">"page"</span>: <span class="c-num">89</span>, <span class="c-key">"total"</span>: <span class="c-num">120</span> },
+  <span class="c-key">"completed_effects"</span>: [<span class="c-str">"pages:1-88"</span>],
+  <span class="c-key">"attempt"</span>: <span class="c-num">1</span>,
+  <span class="c-key">"schema_version"</span>: <span class="c-num">2</span>,
+  <span class="c-key">"trace_id"</span>: <span class="c-str">"trc_9f3a"</span>
+}</pre>
+
+      <details class="example-detail">
+        <summary>Optional failure handoff</summary>
+        <pre aria-label="Example failure handoff">{
+  <span class="c-key">"run_number"</span>: <span class="c-num">15</span>,
+  <span class="c-key">"status"</span>: <span class="c-str">"FAILED"</span>,
+  <span class="c-key">"next_action"</span>: <span class="c-str">"request_human_review"</span>,
+  <span class="c-key">"last_error"</span>: <span class="c-str">"Parser returned empty body twice on page 89"</span>,
+  <span class="c-key">"attempt"</span>: <span class="c-num">3</span>,
+  <span class="c-key">"retry_after"</span>: <span class="c-str">null</span>,
+  <span class="c-key">"schema_version"</span>: <span class="c-num">2</span>,
+  <span class="c-key">"trace_id"</span>: <span class="c-str">"trc_9f3a"</span>
+}</pre>
+      </details>
+
+      <p>That's the level of implementation I think this idea needs: enough shape to be useful, not enough ceremony to become another framework.</p>
+    </section>
+
+    <section id="when-not">
+      <p class="eyebrow">The honest boundary</p>
+      <h2>When not to reach for A2S</h2>
+
+      <p>Don't reach for this if there's no seam: single-shot calls, sub-second interactive loops, or multi-agent coordination live on different axes. A2S only matters when an agent has to stop, lose its live context, and come back later as the same actor with the same job.</p>
+    </section>
+
+    <section id="closing">
+      <p>So that's the thing I've been chewing on. The next time you build an agent that has to wake up tomorrow, notice that the riskiest line of code might not be inside the run. It might be the note the agent leaves on its way out.</p>
+
+      <p class="takeaway">The question isn't <span class="accent">"where do I store its state?"</span><br/>It's <span class="accent">"what does it need to tell its future self?"</span></p>
+    </section>
+
+  </div>
+</article>
+
+<footer class="post-foot">
+  <div class="wrap">
+    <nav class="post-foot-nav" aria-label="Post footer">
+      <a href="../blog.html">All posts</a>
+      <a href="../index.html">Home</a>
+      <a href="../Resume.pdf" target="_blank" rel="noopener" data-track="post:resume">Résumé</a>
+      <a href="https://github.com/panshuljindal" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+    <p class="copy">© <span data-year>2026</span> Panshul Jindal — an essay in the "thinking out loud" register. Concept, not protocol. Feedback and disagreement welcome.</p>
+  </div>
+</footer>
+
+<script src="../js/site.js" defer></script>
+<script src="../js/analytics.js" defer></script>
+</body>
+</html>

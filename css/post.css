@@ -1,0 +1,338 @@
+/* ==========================================================================
+   Shared article theme
+   One blue, one type system, shared by every post so articles read as part
+   of the site rather than as standalone pages.
+   ========================================================================== */
+
+:root {
+  color-scheme: only light;          /* opt out of forced dark-mode inversion */
+
+  /* Palette — mirrors css/site.css */
+  --accent: #2563eb;
+  --accent-deep: #1d4ed8;
+  --accent-soft: #dbeafe;
+  --accent-tint: rgba(37, 99, 235, .07);
+  --accent-line: rgba(37, 99, 235, .16);
+
+  --paper: #fbfbfd;
+  --paper-raise: #ffffff;
+  --paper-alt: #f4f5f9;
+
+  --ink: #0b1120;
+  --ink-soft: #475569;
+  --ink-faint: #7c8798;
+
+  --line: #e7e9f0;
+  --line-strong: #d6dae6;
+
+  /* Semantic pair, desaturated to sit beside the blue rather than fight it */
+  --plus: #2f7a54;
+  --plus-bg: #eaf4ee;
+  --minus: #b34a38;
+  --minus-bg: #fbedea;
+
+  --sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* A 44rem column left the text stranded in whitespace on wide screens.
+     Prose sits at --measure; art, code and figures bleed out to --measure-wide. */
+  --measure: 52rem;
+  --measure-wide: 70rem;
+
+  --r-sm: 9px;
+  --r-md: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--paper);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: clamp(1.03rem, .35vw + .96rem, 1.14rem);
+  line-height: 1.72;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--accent-soft); color: var(--ink); }
+
+/* --------------------------------------------------------------- layout */
+.wrap {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Opt-in bleed for hero art, figures and code — keeps wide screens from
+   feeling empty without stretching the reading measure. */
+.wide {
+  max-width: var(--measure-wide);
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1.5rem;
+}
+
+/* --------------------------------------------------------- type devices */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--accent);
+  display: inline-block;
+  flex: none;
+}
+
+h1 {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.2vw + 1rem, 3.9rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+  margin: 0 0 1.3rem;
+}
+
+h2 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(1.55rem, 1.5vw + 1.05rem, 2.1rem);
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  margin: 0 0 1.2rem;
+}
+
+h3 {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -.015em;
+  margin: 0 0 .6rem;
+}
+
+p { margin: 0 0 1.35rem; }
+
+a {
+  color: var(--accent-deep);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-line);
+  transition: border-color .15s, color .15s;
+}
+a:hover { color: var(--accent); border-color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* ----------------------------------------------------------------- hero */
+header.hero {
+  padding: clamp(3rem, 7vh, 5.5rem) 0 2.4rem;
+}
+.hero .eyebrow { margin-bottom: 1.6rem; }
+.hero .deck {
+  font-size: clamp(1.15rem, .8vw + 1rem, 1.4rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 38rem;
+  margin: 0 0 2rem;
+}
+
+/* Byline — author, date, read time */
+.byline {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: .74rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.byline .who { color: var(--ink); font-weight: 700; }
+.byline .sep { color: var(--line-strong); }
+.byline .tag {
+  font-family: var(--sans);
+  text-transform: none;
+  letter-spacing: .01em;
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+  padding: .18rem .6rem;
+}
+
+/* ------------------------------------------------------------ hero art */
+.hero-art {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--paper-raise), var(--paper-alt));
+  padding: 2.4rem 0;
+  margin-bottom: 1rem;
+}
+figure { margin: 0; }
+figure svg, figure img { width: 100%; height: auto; display: block; }
+figcaption {
+  font-family: var(--sans);
+  font-size: .82rem;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------- sections */
+article section { padding: 3.2rem 0; border-bottom: 1px solid var(--line); }
+article section:last-of-type { border-bottom: 0; }
+
+.lead { font-size: 1.16em; line-height: 1.6; color: var(--ink); }
+
+blockquote {
+  margin: 2rem 0;
+  padding: .25rem 0 .25rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1.1em;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+hr.sep {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 3.5rem auto;
+  max-width: 7rem;
+}
+
+/* ------------------------------------------------------------ code bits */
+pre {
+  font-family: var(--mono);
+  font-size: .82rem;
+  line-height: 1.65;
+  background: var(--paper-raise);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 1.25rem 1.35rem;
+  overflow-x: auto;
+  margin: 1.6rem 0;
+}
+pre .c-key { color: var(--accent-deep); }
+pre .c-str { color: var(--plus); }
+pre .c-num { color: var(--minus); }
+pre .c-com { color: var(--ink-faint); font-style: italic; }
+
+code.inline {
+  font-family: var(--mono);
+  font-size: .82em;
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-line);
+  border-radius: 5px;
+  padding: .08em .4em;
+}
+
+.code-caption {
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: var(--ink-faint);
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin: 1.6rem 0 -.6rem;
+}
+
+details.example-detail {
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--paper-raise);
+  margin: 1.5rem 0;
+  padding: 0 1rem;
+}
+details.example-detail summary {
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--accent-deep);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .9rem 0;
+}
+details.example-detail pre {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  margin: 0 -1rem;
+}
+
+/* --------------------------------------------------------------- chrome */
+.backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 0;
+  padding: 2rem 0 0;
+}
+.backlink:hover { color: var(--accent); border: 0; }
+
+.post-foot {
+  border-top: 1px solid var(--line);
+  background: var(--paper-alt);
+  margin-top: 3rem;
+  padding: 2.5rem 0 3rem;
+}
+.post-foot-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: .87rem;
+  font-weight: 600;
+}
+.post-foot-nav a { border: 0; color: var(--ink-soft); }
+.post-foot-nav a:hover { color: var(--accent); }
+.post-foot .copy {
+  margin: 1.5rem 0 0;
+  font-size: .8rem;
+  color: var(--ink-faint);
+}
+
+.takeaway {
+  font-size: clamp(1.3rem, 2vw + .9rem, 1.75rem);
+  line-height: 1.4;
+  text-align: center;
+  margin: 2.2rem 0 .5rem;
+  color: var(--ink);
+  letter-spacing: -.02em;
+}
+.takeaway .accent { color: var(--accent); font-weight: 700; }
+
+@media (max-width: 640px) {
+  article section { padding: 2.4rem 0; }
+  .hero-art { padding: 1.5rem 0; }
+  pre { padding: .9rem 1rem; font-size: .76rem; }
+}

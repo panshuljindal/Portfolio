@@ -6,7 +6,7 @@
 <title>Stop Spoonfeeding the Model</title>
 <meta name="description" content="The fastest way to make an agent worse is to explain too much. On over-instruction, prompt debt, and briefing agents instead of scripting them." />
 <meta name="author" content="Panshul Jindal" />
-<meta name="theme-color" content="#FCFCFE" />
+<meta name="theme-color" content="#fbfbfd" />
 <link rel="canonical" href="https://panshuljindal.com/blog/stop-spoonfeeding-the-model.html" />
 
 <!-- Open Graph -->
@@ -46,121 +46,15 @@
 <meta name="color-scheme" content="light" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/post.css" />
 <style>
-  :root{
-    color-scheme:only light;   /* opt out of forced dark-mode inversion */
-    --paper:#FCFCFE;
-    --paper-raise:#FFFFFF;
-    --ink:#1A1D23;
-    --ink-soft:#5A616E;
-    --ink-faint:#9198A5;
-    --line:#ECEEF3;
-    --line-strong:#DBDFE8;
-    --accent:#2E5AAC;
-    --accent-deep:#244A8E;
-    --minus:#B34A38;
-    --minus-bg:#FBEDEA;
-    --plus:#2F7A54;
-    --plus-bg:#EAF4EE;
-    --measure:44rem;
-    --gutter:2.6rem;
-  }
-
-  *{box-sizing:border-box;}
-  html{-webkit-text-size-adjust:100%;background:#FCFCFE;}
-  body{
-    margin:0;
-    background:#FCFCFE;
-    color:var(--ink);
-    font-family:"Newsreader",Georgia,serif;
-    font-size:clamp(1.06rem,0.55vw + 0.96rem,1.22rem);
-    line-height:1.62;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
-
-  ::selection{background:#DCE5F4;color:var(--ink);}
-
-  .wrap{
-    max-width:var(--measure);
-    margin:0 auto;
-    padding:0 1.5rem;
-    background:#FCFCFE;
-    min-height:100vh;
-  }
-
-  /* ---------- shared type devices ---------- */
-  .eyebrow{
-    font-family:"JetBrains Mono",monospace;
-    font-size:0.72rem;
-    font-weight:700;
-    letter-spacing:0.22em;
-    text-transform:uppercase;
-    color:var(--accent);
-    margin:0 0 1.1rem;
-    display:flex;
-    align-items:center;
-    gap:0.7rem;
-  }
-  .eyebrow::before{
-    content:"";
-    width:1.6rem;height:2px;
-    background:var(--accent);
-    display:inline-block;
-    flex:none;
-  }
-
-  h2{
-    font-family:"Space Grotesk",sans-serif;
-    font-weight:600;
-    font-size:clamp(1.6rem,1.6vw + 1.1rem,2.15rem);
-    line-height:1.12;
-    letter-spacing:-0.015em;
-    margin:0 0 1.2rem;
-    color:var(--ink);
-  }
-
-  p{margin:0 0 1.35rem;}
-  a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid var(--line-strong);transition:border-color .15s,color .15s;}
-  a:hover{color:var(--accent);border-color:var(--accent);}
-  a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;}
-
-  /* ---------- hero ---------- */
-  header.hero{
-    padding:clamp(3.5rem,9vh,7rem) 0 2.4rem;
-    border-bottom:1px solid var(--line);
-    background:#FCFCFE;
-  }
-  .hero .eyebrow{margin-bottom:1.6rem;}
-  .hero h1{
-    font-family:"Space Grotesk",sans-serif;
-    font-weight:700;
-    font-size:clamp(2.7rem,6vw + 1rem,4.6rem);
-    line-height:0.98;
-    letter-spacing:-0.03em;
-    margin:0 0 1.4rem;
-  }
-  .hero .deck{
-    font-size:clamp(1.2rem,0.8vw + 1.05rem,1.5rem);
-    line-height:1.42;
-    color:var(--ink-soft);
-    max-width:34rem;
-    margin:0 0 2.6rem;
-    font-style:italic;
-  }
-  .byline{
-    font-family:"JetBrains Mono",monospace;
-    font-size:0.75rem;
-    letter-spacing:0.04em;
-    color:var(--ink-faint);
-    text-transform:uppercase;
-  }
-  .byline b{color:var(--ink-soft);font-weight:500;}
+  /* Tokens, base typography and .wrap live in css/post.css. */
 
   /* ---------- diff block ---------- */
+  .diff-figure{margin:0 0 2.6rem;}
   .diff{
-    margin:2.4rem 0 0.6rem;
+    margin:0 0 0.6rem;
     background:var(--paper-raise);
     border:1px solid var(--line-strong);
     border-radius:10px;
@@ -173,17 +67,17 @@
     gap:0.55rem;
     padding:0.7rem 1rem;
     border-bottom:1px solid var(--line);
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.72rem;
     letter-spacing:0.03em;
     color:var(--ink-faint);
-    background:#FBFCFE;
+    background:var(--paper-raise);
   }
   .dot{width:0.62rem;height:0.62rem;border-radius:50%;background:var(--line-strong);flex:none;}
   .dot.a{background:#E7B8AE;} .dot.b{background:#ECDCA8;} .dot.c{background:#AFD4BE;}
   .diff-head .fname{margin-left:0.5rem;}
   .diff-body{
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:clamp(0.78rem,0.4vw + 0.7rem,0.9rem);
     line-height:1.85;
     padding:0.7rem 0;
@@ -209,7 +103,7 @@
   .row.add .tx{color:#276245;}
   .row.gap{opacity:0;height:0.35rem;}
   .diff-cap{
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.74rem;
     color:var(--ink-faint);
     margin:0.9rem 0 0;
@@ -229,12 +123,10 @@
   @keyframes rowin{to{opacity:1;transform:none;}}
 
   /* ---------- sections ---------- */
-  section{padding:3.4rem 0;border-bottom:1px solid var(--line);background:#FCFCFE;}
-  section:last-of-type{border-bottom:none;}
   .lead-in{color:var(--ink-soft);font-size:1.02em;}
 
   .mini{
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.82em;
     padding:0.06em 0.4em;
     border-radius:4px;
@@ -250,7 +142,7 @@
     border-left:3px solid var(--accent);
   }
   .pull q{
-    font-family:"Space Grotesk",sans-serif;
+    font-family:var(--sans);
     font-weight:500;
     font-size:clamp(1.35rem,1.4vw + 1.05rem,1.85rem);
     line-height:1.28;
@@ -271,7 +163,7 @@
   }
   .principle:first-of-type{border-top:2px solid var(--ink);}
   .principle .num{
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.86rem;
     font-weight:700;
     color:var(--accent);
@@ -279,7 +171,7 @@
     letter-spacing:0.02em;
   }
   .principle h3{
-    font-family:"Space Grotesk",sans-serif;
+    font-family:var(--sans);
     font-weight:600;
     font-size:1.28rem;
     line-height:1.2;
@@ -300,14 +192,14 @@
   }
   .reads li:first-child{border-top:2px solid var(--ink);}
   .reads .who{
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.72rem;
     letter-spacing:0.08em;
     text-transform:uppercase;
     color:var(--ink-faint);
   }
   .reads .title-line{
-    font-family:"Space Grotesk",sans-serif;
+    font-family:var(--sans);
     font-weight:600;
     font-size:1.1rem;
     line-height:1.25;
@@ -319,12 +211,12 @@
   .closing h2{font-size:clamp(1.9rem,2.4vw + 1.1rem,2.7rem);}
   footer{
     padding:2.4rem 0 4rem;
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.76rem;
     line-height:1.7;
     color:var(--ink-faint);
     letter-spacing:0.02em;
-    background:#FCFCFE;
+    background:var(--paper);
   }
   footer .rule{height:2px;background:var(--ink);width:2.6rem;margin-bottom:1.2rem;}
 
@@ -343,7 +235,7 @@
   .backlink{
     display:inline-flex;align-items:center;gap:0.55rem;
     margin-top:2.2rem;
-    font-family:"JetBrains Mono",monospace;
+    font-family:var(--mono);
     font-size:0.72rem;font-weight:700;
     letter-spacing:0.18em;text-transform:uppercase;
     color:var(--ink-faint);border-bottom:0;
@@ -351,7 +243,7 @@
   .backlink:hover{color:var(--accent-deep);}
   .post-foot-nav{display:flex;flex-wrap:wrap;gap:1.4rem;margin-bottom:1.2rem;}
   .post-foot-nav a{
-    font-family:"JetBrains Mono",monospace;font-size:0.76rem;
+    font-family:var(--mono);font-size:0.76rem;
     color:var(--ink-soft);border-bottom:1px solid var(--line-strong);
   }
   .post-foot-nav a:hover{color:var(--accent-deep);border-color:var(--accent);}
@@ -360,16 +252,63 @@
 </head>
 <body>
 
-<div class="wrap" data-article>
+<div class="wrap">
+  <a class="backlink" href="../blog.html" data-track="post:back-to-blog">← All posts</a>
+</div>
 
-  <a class="backlink" href="../blog.html">← All posts</a>
-
-  <header class="hero">
+<header class="hero">
+  <div class="wrap">
     <p class="eyebrow">Field notes · Building production agents</p>
     <h1>Stop Spoonfeeding&nbsp;the Model</h1>
     <p class="deck">The fastest way to make an agent worse is to explain too much. We mistake control for rigor — and the prompt rots exactly like bad code.</p>
-    <p class="byline">28 August 2026 · <b>8 min read</b></p>
+    <p class="byline"><span class="who">By Panshul Jindal</span> <span class="sep">·</span> 28 August 2026 <span class="sep">·</span> 8 min read</p>
+  </div>
+</header>
 
+
+<div class="hero-art">
+  <div class="wide">
+    <figure>
+      <!-- Nine scripted steps collapsing into a two-line brief. -->
+      <svg viewBox="0 0 860 280" role="img" aria-label="A long over-instructed prompt of nine scripted steps collapsing into a two-line brief.">
+        <defs>
+          <marker id="sfArrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+            <path d="M0,0 L7,3 L0,6 Z" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- over-instructed -->
+        <rect x="52" y="40" width="290" height="200" rx="14" fill="#fff" stroke="#e7e9f0"/>
+        <text x="72" y="68" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#b34a38">OVER-INSTRUCTED</text>
+        <text x="72" y="86" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">every branch spelled out</text>
+        <g stroke="#e7c9c2" stroke-width="6" stroke-linecap="round">
+          <line x1="72" y1="108" x2="300" y2="108"/><line x1="72" y1="124" x2="286" y2="124"/>
+          <line x1="72" y1="140" x2="308" y2="140"/><line x1="72" y1="156" x2="262" y2="156"/>
+          <line x1="72" y1="172" x2="296" y2="172"/><line x1="72" y1="188" x2="248" y2="188"/>
+          <line x1="72" y1="204" x2="304" y2="204"/><line x1="72" y1="220" x2="220" y2="220"/>
+        </g>
+
+        <path d="M368,140 H492" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#sfArrow)"/>
+        <text x="430" y="128" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#2563eb">delete nine</text>
+        <text x="430" y="162" text-anchor="middle" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">keep the landmines</text>
+
+        <!-- briefed -->
+        <rect x="518" y="88" width="290" height="104" rx="14" fill="#eff6ff" stroke="#bfdbfe"/>
+        <text x="538" y="116" font-family="Plus Jakarta Sans,sans-serif" font-size="12" font-weight="700" fill="#2563eb">BRIEFED</text>
+        <text x="538" y="134" font-family="Plus Jakarta Sans,sans-serif" font-size="11" fill="#7c8798">goal, plus the one gotcha</text>
+        <g stroke="#2563eb" stroke-width="6" stroke-linecap="round" opacity=".85">
+          <line x1="538" y1="156" x2="770" y2="156"/><line x1="538" y1="172" x2="700" y2="172"/>
+        </g>
+      </svg>
+      <figcaption>A prompt is not an asset you pile up. It is a liability you carry.</figcaption>
+    </figure>
+  </div>
+</div>
+
+<article>
+  <div class="wrap" data-article>
+
+    <figure class="diff-figure">
     <div class="diff" role="img" aria-label="A before-and-after diff: a long over-instructed agent system prompt reduced to two lean lines.">
       <div class="diff-head"><span class="dot a"></span><span class="dot b"></span><span class="dot c"></span><span class="fname">support-agent &nbsp;—&nbsp; same task, two briefings</span></div>
       <div class="diff-body">
@@ -383,8 +322,8 @@
         <div class="row add"><span class="mk">+</span><span class="tx">Gotcha: the orders API shows "paid" before the charge settles — wait for status=settled.</span></div>
       </div>
     </div>
-    <p class="diff-cap">Same task. One of these ages badly on the next model release.</p>
-  </header>
+      <figcaption class="diff-cap">Same task. One of these ages badly on the next model release.</figcaption>
+    </figure>
 
   <section>
     <p class="eyebrow">The tell</p>
@@ -567,8 +506,11 @@
     <p>Next time you're about to add the tenth instruction, delete the first nine and watch what breaks. In my experience, less than you feared. Give the model the map and the landmines, then get out of its way. That's not laziness — it's the same taste that separates software I'm proud of from software that merely runs.</p>
   </section>
 
-  <footer>
-    <div class="rule"></div>
+  </div>
+</article>
+
+<footer class="post-foot">
+  <div class="wrap">
     <nav class="post-foot-nav">
       <a href="../blog.html">← All posts</a>
       <a href="../index.html">Home</a>
@@ -576,10 +518,9 @@
       <a href="https://github.com/panshuljindal" target="_blank" rel="noopener">GitHub</a>
       <a href="https://linkedin.com/in/panshul-jindal-392746199" target="_blank" rel="noopener">LinkedIn</a>
     </nav>
-    <div>&copy; <span data-year>2026</span> Panshul Jindal</div>
-  </footer>
-
-</div>
+    <p class="copy">&copy; <span data-year>2026</span> Panshul Jindal</p>
+  </div>
+</footer>
 <script src="../js/site.js" defer></script>
 <script src="../js/analytics.js" defer></script>
 </body>

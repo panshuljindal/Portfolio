@@ -209,9 +209,13 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 }
 .drawer nav a:hover { color: var(--accent); padding-left: .85rem; }
 .drawer nav a i { font-size: .8rem; color: var(--ink-4); }
-.drawer-foot { margin-top: auto; padding-top: 1.5rem; display: flex; gap: 1.25rem; }
-.drawer-foot a { color: var(--ink-3); font-size: 1.15rem; transition: color .2s; }
+.drawer-foot { margin-top: auto; padding-top: 1.5rem; display: flex; gap: .5rem; }
+.drawer-foot a {
+  width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center;
+  color: var(--ink-3); font-size: 1.15rem; transition: color .2s, background .2s;
+}
 .drawer-foot a:hover { color: var(--accent); }
+.drawer-foot a:active { background: var(--accent-tint); }
 
 /* --------------------------------------------------------------------------
    5. Reusable atoms
@@ -332,4 +336,10 @@ html:not(.js-ready) .reveal { opacity: 1; transform: none; }
   :root { --gutter: 1.15rem; }
   .section { padding: 3.25rem 0; }
   .footer-top { flex-direction: column; }
+}
+
+/* Touch devices: icon-only controls need a finger-sized target. */
+@media (pointer: coarse) {
+  .footer-social a { width: 44px; height: 44px; }
+  .footer-col a { padding: .15rem 0; }
 }
